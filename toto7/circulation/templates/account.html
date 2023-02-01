@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ru-RU">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="description" content="DESCRIPTION" />
+    <meta name="keywords" content="KEYWORDS" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <!-- link(rel="preconnect" href="https://fonts.googleapis.com")-->
+    <!-- link(rel="preconnect" href="https://fonts.gstatic.com" crossorigin)-->
+    <!-- link(href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet")-->
+    <title>TOTO7 | Личный кабинет</title>
+    <script defer src="js/main.min.js"></script>
+    <link href="css/main.min.css" rel="stylesheet" />
+    <script src="js/profile-form.js"></script>
+  </head>
+  <body class="isLoading">
+    <header class="header">
+      <a class="header__logo" href="/"><img src="assets/images/logo.svg" alt="Logo" /></a>
+      <nav class="header__navigation navigation">
+        <a class="navigation__link" href="#">О нас</a
+        ><a class="navigation__link" href="#">Архив тиражей</a
+        ><a class="navigation__link" href="#">Правила</a
+        ><a class="navigation__link" href="#">Купить билеты</a>
+      </nav>
+      <div class="header__auth auth">
+        <button
+          class="auth__btn btn auth__btn_login"
+          type="button"
+          data-form-name="login"
+        >
+          Вход
+        </button>
+        <button
+          class="auth__btn btn auth__btn_signup"
+          type="button"
+          data-form-name="signup"
+        >
+          Регистрация
+        </button>
+      </div>
+      <div class="header__user user" hidden>
+        <div class="user__info">
+          <div class="user__avatar">И.К.</div>
+          <a class="user__name" href="/account.html">Иван К.</a>
+        </div>
+        <button class="user__logout-btn btn" type="button">Выход</button>
+      </div>
+      <div class="header__burger"><span></span><span></span><span></span></div>
+    </header>
+    <main>
+      <section class="content">
+        <div class="content__tabs">
+          <button class="content__tab-btn active" type="button" data-tab="profile">
+            Мой профиль
+          </button>
+          <button class="content__tab-btn" type="button" data-tab="status">
+            Мой статус
+          </button>
+          <button class="content__tab-btn" type="button" data-tab="rates">
+            Мои ставки
+          </button>
+        </div>
+        <div class="content__data profile" id="profile">
+          <form id="profile-form" action="">
+            <div class="profile__avatar">
+              <button class="profile__avatar-edit" type="button"></button>
+            </div>
+
+            <ul class="profile__info">
+              <li class="profile__field">
+                <p class="profile__description">Фамилия Имя Отчество</p>
+                <input
+                  value="Коновалов Илья Иванович"
+                  class="profile__data"
+                  type="text"
+                  disabled
+                />
+                <button class="profile__edit-btn" type="button">изменить</button>
+              </li>
+              <li class="profile__field">
+                <p class="profile__description">E-mail</p>
+                <input
+                  value="konoval1981@gmail.com"
+                  class="profile__data"
+                  type="text"
+                  disabled
+                />
+                <button class="profile__edit-btn" type="button">изменить</button>
+              </li>
+              <li class="profile__field">
+                <p class="profile__description">Номер телефона</p>
+                <input
+                  value="+7 900 123 45 67"
+                  class="profile__data"
+                  type="text"
+                  disabled
+                />
+
+                <button class="profile__edit-btn" type="button">изменить</button>
+              </li>
+              <li class="profile__field">
+                <p class="profile__description">Дата рождения</p>
+                <input value="01/11/1981" class="profile__data" type="date" disabled />
+                <button class="profile__edit-btn" type="button">изменить</button>
+              </li>
+              <li class="profile__field">
+                <p class="profile__description">Регион</p>
+                <input type="text" value="Адыгея" class="profile__data" disabled />
+                <button class="profile__edit-btn" type="button">изменить</button>
+              </li>
+              <li class="profile__field">
+                <p class="profile__description">Статус</p>
+                <p class="profile__data profile__data_status">Бронзовый</p>
+              </li>
+            </ul>
+
+            <button class="profile__edit" type="button">Редактировать</button>
+          </form>
+        </div>
+        <div class="content__data status" id="status" hidden>
+          <div class="status__card active">
+            <h3 class="status__head status__head_red">Бронзовый</h3>
+            <div class="status__body status__body_red">
+              <p class="status__amount">Приобретено: 100 билетов</p>
+              <p class="status__rest">Осталось: 400 билетов до Золотого</p>
+              <button class="status__btn btn" type="button">Как получить?</button>
+            </div>
+          </div>
+          <div class="status__card">
+            <h3 class="status__head status__head_gold">Золотой</h3>
+            <div class="status__body status__body_gold">
+              <p class="status__info">
+                Скидка 5 %
+                <span>на все билеты</span>
+              </p>
+            </div>
+          </div>
+          <div class="status__card">
+            <h3 class="status__head status__head_blue">Бриллиантовый</h3>
+            <div class="status__body status__body_blue">
+              <p class="status__info">
+                Скидка 10 %
+                <span>на все билеты</span>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="content__data rates" id="rates" hidden>
+          <div class="rates__sorted">
+            <button class="rates__btn active" type="button">Все</button>
+            <button class="rates__btn" type="button">Ожидают</button>
+            <button class="rates__btn" type="button">Выигравшие</button>
+          </div>
+          <table class="rates__table">
+            <tr>
+              <th>Дата</th>
+              <th>Билет</th>
+              <th>Выигрыш</th>
+              <th>Статус</th>
+            </tr>
+            <tr>
+              <td>2022-12-01</td>
+              <td><span data-ticket-status="bronze"></span>№12345678</td>
+              <td>15 000</td>
+              <td>Получен</td>
+            </tr>
+            <tr>
+              <td>2022-12-01</td>
+              <td><span data-ticket-status="bronze"></span>№12345633</td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>2022-12-06</td>
+              <td><span data-ticket-status="gold"></span>№12345679</td>
+              <td></td>
+              <td>Ожидает</td>
+            </tr>
+          </table>
+        </div>
+      </section>
+    </main>
+    <footer class="footer">
+      <a class="footer__logo" href="/"><img src="assets/images/logo.svg" alt="Logo" /></a>
+      <ul class="footer__links-list">
+        <li><a class="footer__link" href="#">О нас</a></li>
+        <li><a class="footer__link" href="#">Архив тиражей</a></li>
+        <li><a class="footer__link" href="#">Правила</a></li>
+        <li><a class="footer__link" href="#">Политика конфиденциальности</a></li>
+      </ul>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+    <main>
+        <section class="hero">
+            <h1 class="hero__title">TOTO<span>7&nbsp;-</span> твоя счастливая ставка!</h1>
+        </section>
+        <section class="events">
+            <h2 class="events__title section-title">События</h2>
+            <div class="events__list">
+                <div class="events__card card-event">
+                    <div class="card-event__head">
+                        <h3 class="card-event__title">
+                            <img src="{% static 'assets/images/title-icon.svg' %}" alt="Иконка события"/>Футбол:
+                            Кубок Англии
+                        </h3>
+                        <time class="card-event__time" datetime="2001-05-15 19:00"
+                        >2022/12/02 13:00
+                        </time
+                        >
+                    </div>
+                    <div class="card-event__body">
+                        <div class="card-event__competitor card-event__competitor_first competitor">
+                            <div class="competitor__image">
+                                <img
+                                        src="{% static 'assets/images/liverpool.webp' %}"
+                                        alt="Liverpool FC | Ливерпуль"
+                                />
+                            </div>
+                            <p class="competitor__name">Liverpool FC | Ливерпуль</p>
+                        </div>
+                        <div class="card-event__buttons-wrapper">
+                            <button class="card-event__btn btn" type="button">Победа</button>
+                            <button class="card-event__btn btn" type="button">Ничья</button>
+                            <button class="card-event__btn btn" type="button">Победа</button>
+                        </div>
+                        <div
+                                class="card-event__competitor card-event__competitor_second competitor"
+                        >
+                            <div class="competitor__image">
+                                <img
+                                        src="{% static 'assets/images/Manchester.webp' %}"
+                                        alt="Manchester United | Манчестер Юнайтед"
+                                />
+                            </div>
+                            <p class="competitor__name">Manchester United | Манчестер Юнайтед</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="events__card card-event">
+                    <div class="card-event__head">
+                        <h3 class="card-event__title">
+                            <img src="{% static 'assets/images/title-icon.svg' %}" alt="Иконка события"/>Футбол:
+                            Кубок России
+                        </h3>
+                        <time class="card-event__time" datetime="2001-05-15 19:00"
+                        >2022/12/02 13:00
+                        </time
+                        >
+                    </div>
+                    <div class="card-event__body">
+                        <div class="card-event__competitor card-event__competitor_first competitor">
+                            <div class="competitor__image">
+                                <img src="{% static 'assets/images/zenit.webp' %}" alt="Зенит"/>
+                            </div>
+                            <p class="competitor__name">Зенит</p>
+                        </div>
+                        <div class="card-event__buttons-wrapper">
+                            <button class="card-event__btn btn" type="button">Победа</button>
+                            <button class="card-event__btn btn" type="button">Ничья</button>
+                            <button class="card-event__btn btn" type="button">Победа</button>
+                        </div>
+                        <div
+                                class="card-event__competitor card-event__competitor_second competitor"
+                        >
+                            <div class="competitor__image">
+                                <img src="{% static 'assets/images/shinik.webp'%}" alt="Шинник"/>
+                            </div>
+                            <p class="competitor__name">Шинник</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="events__btn btn">Сделать ставку</button>
+        </section>
+        <section class="choose">
+            <h2 class="choose__title section-title">Выберите билет</h2>
+            <div class="choose__tickets tickets">
+                <div class="tickets__item">
+                    <h3 class="tickets__head tickets__head_red">Бронзовый</h3>
+                    <div class="tickets__body tickets__body_red">
+                        <p class="tickets__price">Стоимость: 100 р.</p>
+                        <p class="tickets__win">Выигрыш: 15 000 р.</p>
+                        <button class="tickets__btn btn" type="button">Как получить?</button>
+                    </div>
+                </div>
+                <div class="tickets__item">
+                    <h3 class="tickets__head tickets__head_gold">Золотой</h3>
+                    <div class="tickets__body tickets__body_gold">
+                        <p class="tickets__price">Стоимость: 500 р.</p>
+                        <p class="tickets__win">Выигрыш: 65 000 р.</p>
+                        <button class="tickets__btn btn" type="button">Как получить?</button>
+                    </div>
+                </div>
+                <div class="tickets__item">
+                    <h3 class="tickets__head tickets__head_blue">Бриллиантовый</h3>
+                    <div class="tickets__body tickets__body_blue">
+                        <p class="tickets__price">Стоимость: 1 000 р.</p>
+                        <p class="tickets__win">Выигрыш: 200 000 р.</p>
+                        <button class="tickets__btn btn" type="button">Как получить?</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+{% endblock %}
