@@ -20,7 +20,7 @@
                         <div class="card-event__body">
                             <div class="card-event__competitor card-event__competitor_first competitor">
                                 <div class="competitor__image">
-                                    <img src="{% static 'assets/images/zenit.webp' %}" alt="Зенит"/>
+                                        <img src="{{ match.command_a.imag.url }}" alt=""/>
                                 </div>
                                 <p class="competitor__name">{{ match.command_a }}</p>
                             </div>
@@ -33,7 +33,7 @@
                                     class="card-event__competitor card-event__competitor_second competitor"
                             >
                                 <div class="competitor__image">
-                                    <img src="{% static 'assets/images/shinik.webp' %}" alt="Шинник"/>
+                                    <img src="{{ match.command_b.imag.url }}" alt=""/>
                                 </div>
                                 <p class="competitor__name">{{ match.command_b }}</p>
                             </div>

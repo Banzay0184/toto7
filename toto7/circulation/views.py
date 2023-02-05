@@ -4,8 +4,8 @@ from datetime import datetime
 
 
 def index(request):
-    matchs = Match.objects.filter(circulation__end_date__gte=datetime.now())
-    return render(request, 'index.html', {'matchs': matchs})
+    matchs = Match.objects.filter(circulation__end_date_current__gte=datetime.now())
+    return render(request, 'index.html', {'matchs': matchs,})
 
 
 def users(request):

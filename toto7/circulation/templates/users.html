@@ -40,7 +40,10 @@
                             <header class="table-header">
                                 <div class="table-header__row">
                                     <span>Время окончания приема:</span>
-                                    <span id="future-circulation-data" class="">23.10.2001</span>
+                                    {% for circulation in circulations %}
+                                        <span id="future-circulation-data"
+                                              class="">{{ circulation.end_date|date:'d.m.y G:i' }}</span>
+                                    {% endfor %}
                                     <input id="future-circulation-input" type="datetime-local" class="hidden">
                                     <span>
                       <button
@@ -74,10 +77,16 @@
                                 {% for future in futures %}
                                     <tr>
                                         <td>
-                                            {{ future.command_a }}
+                                            <div style="display: flex; align-items: center">
+                                                <img style="width: 20%" src="{{ future.command_a.imag.url }}" alt=""/>
+                                                {{ future.command_a }}
+                                            </div>
                                         </td>
                                         <td>
-                                            {{ future.command_b }}
+                                            <div style="display: flex; align-items: center">
+                                                <img style="width: 20%" src="{{ future.command_b.imag.url }}" alt=""/>
+                                                {{ future.command_b }}
+                                            </div>
                                         </td>
                                         <td>
                                             <button style="color: #2099ff; cursor: pointer">
@@ -89,9 +98,39 @@
                                 {% endfor %}
                                 </tbody>
                             </table>
-
-                            <button class="table-bottom-button">Добавить событие +</button>
+                            <button class="table-bottom-button" type="button" id="myBtn">Добавить событие +</button>
                         </form>
+
+                        <div id="myModal" class="modal"
+                             style="display: none;position: fixed;z-index: 1; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.8);"
+                        >
+                            <div style="background-color: #fefefe; margin: 15% auto; padding: 20px; border: 1px solid #888; width: 80%">
+                                <span class="close"
+                                      style="color: #888; float: right; font-size: 28px; font-weight: bold; cursor: pointer">&times;</span>
+                                <form>
+                                    <input type="text">
+                                    <button type="submit">sss</button>
+                                </form>
+                            </div>
+                        </div>
+                        <script>
+                            var modal = document.getElementById('myModal');
+                            var btn = document.getElementById('myBtn');
+                            var sapn = document.getElementsByClassName("close")[0];
+
+                            btn.onclick = function () {
+                                modal.style.display = 'block';
+                            }
+                            sapn.onclick = function () {
+                                modal.style.display = 'none';
+                            }
+                            window.onclick = function (event) {
+                                if (event.target == modal) {
+                                    modal.style.display = 'none';
+                                }
+                            }
+                        </script>
+
                     </div>
                 </div>
 
@@ -119,8 +158,18 @@
                             <tbody>
                             {% for current in currents %}
                                 <tr>
-                                    <td style="font-weight: 600">{{ current.command_a }}</td>
-                                    <td style="font-weight: 600">{{ current.command_b }}</td>
+                                    <td style="font-weight: 600">
+                                        <div style="display: flex; align-items: center">
+                                            <img style="width: 20%" src="{{ current.command_a.imag.url }}" alt=""/>
+                                            {{ current.command_a }}
+                                        </div>
+                                    </td>
+                                    <td style="font-weight: 600">
+                                        <div style="display: flex; align-items: center">
+                                            <img style="width: 20%" src="{{ current.command_b.imag.url }}" alt=""/>
+                                            {{ current.command_b }}
+                                        </div>
+                                    </td>
                                 </tr>
                             {% endfor %}
                             </tbody>
@@ -138,56 +187,52 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="tab-block" id="completed-edition">
-                    <div class="table-container">
-                        <header class="table-header">
-                            <div class="table-header__row">
-                                <span>Дата:</span>
-                                <span>20221203</span>
-                            </div>
-                            <div class="table-header__row">
-                                <span>Время окончания приема:</span>
-                                <span>23:59:59</span>
-                            </div>
-                        </header>
+                    {% for finish in finishes %}
+                        <div class="table-container" style="margin-bottom: 20px">
+                            <header class="table-header">
+                                <div class="table-header__row">
+                                    <span>Время окончания приема:</span>
+                                    <span>23:59:59</span>
+                                </div>
+                                <div class="table-header__row">
+                                    <span>Номер тиража:</span>
+                                    <span>{{ finish.circulation.number }}</span>
+                                </div>
 
-                        <form action="" id="form-completed-edition">
-                            <table class="table">
-                                <thead class="table-head">
-                                <tr>
-                                    <th>Участник</th>
-                                    <th>Участник</th>
-                                    <th>Результат</th>
-                                    <th></th>
-                                </tr>
-                                </thead>
+                            </header>
+                            <form action="" id="form-completed-edition">
+                                <table class="table">
+                                    <thead class="table-head">
+                                    <tr>
+                                        <th>Участник</th>
+                                        <th>Участник</th>
+                                        <th>Результат</th>
+                                        <th></th>
+                                    </tr>
+                                    </thead>
 
-                                <tbody>
-                                {% for finish in finishes %}
+                                    <tbody>
+
                                     <tr>
                                         <td>
-                                            <input
-                                                    type="text"
-                                                    style="font-weight: 600; text-align: center; color: #ff4e20"
-                                                    value="{{ finish.command_a }}"
-                                                    disabled="true"
-                                            />
+                                            <div style="display: flex; align-items: center">
+                                                <img style="width: 20%" src="{{ finish.command_a.imag.url }}" alt=""/>
+                                                {{ finish.command_a }}
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div style="display: flex; align-items: center">
+                                                <img style="width: 20%" src="{{ finish.command_b.imag.url }}" alt=""/>
+                                                {{ finish.command_b }}
+                                            </div>
                                         </td>
 
                                         <td>
                                             <input
                                                     type="text"
-                                                    style="font-weight: 600; text-align: center; color: #ff4e20"
-                                                    value="{{ finish.command_b }}"
-                                                    disabled="true"
-                                            />
-                                        </td>
-
-                                        <td>
-                                            <input
-                                                    type="text"
-                                                    style="color: #2099ff; cursor: pointer"
+                                                    style="color: #2099ff; cursor: pointer; text-align: center"
                                                     value="1:0"
                                                     disabled="true"
                                             />
@@ -198,37 +243,37 @@
                                             </button>
                                         </td>
                                     </tr>
-                                {% endfor %}
-                                </tbody>
-                            </table>
-                        </form>
+                                    </tbody>
+                                </table>
+                            </form>
 
-                        <div class="table-footer">
-                            <div class="table-footer__row">
-                                <span> Количество проданных билетов: </span>
-                                <span> 1500</span>/<span>100</span>/<span>10</span>
-                            </div>
 
-                            <div class="table-footer__row">
-                                <span> Общая сумма ставок: </span> <span>75 000 р.</span>
-                            </div>
+                            <div class="table-footer">
+                                <div class="table-footer__row">
+                                    <span> Количество проданных билетов: </span>
+                                    <span> 1500</span>/<span>100</span>/<span>10</span>
+                                </div>
 
-                            <div class="table-footer__row">
-                                <span> Количество выигравших билетов: </span>
-                                <span>5</span>/<span>1</span>/<span>0</span>
-                            </div>
+                                <div class="table-footer__row">
+                                    <span> Общая сумма ставок: </span> <span>75 000 р.</span>
+                                </div>
 
-                            <div class="table-footer__row">
-                                <span> Общая сумма выиграша: </span> <span>140 000 р.</span>
-                            </div>
+                                <div class="table-footer__row">
+                                    <span> Количество выигравших билетов: </span>
+                                    <span>5</span>/<span>1</span>/<span>0</span>
+                                </div>
 
-                            <div class="table-footer__row">
-                                <button class="table-footer__button">Опубликовать</button>
+                                <div class="table-footer__row">
+                                    <span> Общая сумма выиграша: </span> <span>140 000 р.</span>
+                                </div>
+
+                                <div class="table-footer__row">
+                                    <button class="table-footer__button">Опубликовать</button>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    {% endfor %}
                 </div>
-
                 <div class="tab-block" id="tickets">
                     <div class="table-container">
                         <form action="" class="form-tickets">
@@ -798,25 +843,25 @@
             }
         });
 
-        const futureCalculationData =document.getElementById('future-circulation-data')
-        const futureCalculationInput= document.getElementById('future-circulation-input')
-        const futureCalculationButton= document.getElementById('future-circulation-button')
-        const futureCalculationButtonSave= document.getElementById('future-circulation-button-save')
+        const futureCalculationData = document.getElementById('future-circulation-data')
+        const futureCalculationInput = document.getElementById('future-circulation-input')
+        const futureCalculationButton = document.getElementById('future-circulation-button')
+        const futureCalculationButtonSave = document.getElementById('future-circulation-button-save')
 
-        futureCalculationButton.addEventListener('click',() => {
+        futureCalculationButton.addEventListener('click', () => {
             futureCalculationData.classList.add('hidden')
             futureCalculationInput.classList.remove('hidden')
             futureCalculationButton.classList.add('hidden')
             futureCalculationButtonSave.classList.remove('hidden')
 
-        } )
-         futureCalculationButtonSave.addEventListener('click',() => {
+        })
+        futureCalculationButtonSave.addEventListener('click', () => {
             futureCalculationData.classList.remove('hidden')
             futureCalculationInput.classList.add('hidden')
             futureCalculationButton.classList.remove('hidden')
             futureCalculationButtonSave.classList.add('hidden')
 
-        } )
+        })
 
     </script>
 {% endblock %}

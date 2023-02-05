@@ -14,15 +14,17 @@ class Ticket(models.Model):
 
 class Command(models.Model):
     name = models.CharField(max_length=100)
-    imag = models.ImageField(upload_to='command_imag')
+    imag = models.ImageField()
 
     def __str__(self):
         return self.name
 
 
 class Circulation(models.Model):
+    number = models.IntegerField()
     end_date = models.DateTimeField(null=True, blank=True)
     end_date_current = models.DateTimeField(null=True, blank=True)
+    end_date_finish = models.DateTimeField(null=True, blank=True)
 
     def __str__(self):
         return f'{self.end_date}'
