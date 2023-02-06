@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 
 
 # Create your models here.
@@ -42,3 +43,24 @@ class Match(models.Model):
 
     def __str__(self):
         return f'{self.command_a} and {self.command_b}'
+
+
+class User(AbstractUser):
+    ADMIN = 'admin'
+    CLIENT = 'client'
+    role = (
+        (ADMIN, 'Админ'),
+        (CLIENT, 'Клиент'),
+    )
+
+    image = models.ImageField(null=True, blank=True)
+    login = models.CharField(max_length=255)
+    password = models.CharField(max_length=255)
+    role = models.CharField(choices=role, default=CLIENT, max_length=255)
+    # first_name = models.CharField(max_length=150)
+    # last_name = models.CharField(max_length=150)
+    # email = models.EmailField()
+    # phone = models.IntegerField()
+    # birthday = models.DateField()
+    # region = models.CharField(max_length=150)
+    # balance = models.DecimalField(max_digits=10, decimal_places=2, default=0)

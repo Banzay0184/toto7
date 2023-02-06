@@ -121,3 +121,6 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# users
+AUTH_USER_MODEL = 'circulation.User'

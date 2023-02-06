@@ -23,13 +23,14 @@
     <nav class="header__navigation navigation">
     </nav>
     <div class="header__auth auth">
-        <button
+        <a
+                href="/sign_in"
                 class="auth__btn btn auth__btn_login"
                 type="button"
                 data-form-name="login"
         >
             Вход
-        </button>
+        </a>
         <button
                 class="auth__btn btn auth__btn_signup"
                 type="button"
@@ -60,6 +61,8 @@
         <li><a class="footer__link" href="#">Политика конфиденциальности</a></li>
     </ul>
 </footer>
+
+
 <div class="overlay" hidden>
     <div class="pop-up">
         <span class="pop-up__close"></span>
@@ -252,42 +255,6 @@
                 <button class="form-signup__submit-btn" type="submit">
                     Зарегистрироваться
                 </button>
-            </fieldset>
-        </form>
-        <form class="pop-up__form form-login" hidden name="login">
-            <fieldset>
-                <legend>
-                    Вход
-                    <button type="button" class="signup-btn">Регистрация</button>
-                </legend>
-                <div class="form-login__field">
-                    <label>Укажите Ваш E-mail</label>
-                    <input
-                            type="email"
-                            placeholder="User@domain.com"
-                            autocomplete="off"
-                            required
-                            name="email"
-                    /><small></small>
-                </div>
-                <div class="form-login__field">
-                    <label>Введите пароль</label>
-                    <input
-                            type="password"
-                            placeholder="Пароль"
-                            autocomplete="off"
-                            required
-                            name="password"
-                    /><small></small>
-                </div>
-                <div class="form-login__field form-login__field_flex">
-                    <input type="checkbox" name="signupCheckbox"/><span
-                        class="checkmark"
-                ></span>
-                    <label class="checkbox-label">Запомнить меня</label>
-                </div>
-                <button class="form-login__submit-btn" type="submit">Войти</button>
-                <button class="form-login__restore-btn" type="button">Забыли пароль?</button>
             </fieldset>
         </form>
     </div>
