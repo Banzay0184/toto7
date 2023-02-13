@@ -1,0 +1,590 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+    {% block script %}
+        <script src="{% static 'js/users.js' %}"></script>
+    {% endblock %}
+    <style>
+        .hidden {
+            display: none;
+        }
+    </style>
+    <main>
+        <section class="content">
+            <div class="content__tabs">
+                <button
+                        class="content__tab-btn active"
+                        type="button"
+                        data-tab="future-circulation"
+                >
+                    Будущий тираж
+                </button>
+                <button class="content__tab-btn" type="button" data-tab="current-circulation">
+                    Текущий тираж
+                </button>
+                <button class="content__tab-btn" type="button" data-tab="completed-edition">
+                    Завершенный тираж
+                </button>
+                <button class="content__tab-btn" type="button" data-tab="tickets">
+                    Билеты
+                </button>
+                <button class="content__tab-btn" type="button" data-tab="users">
+                    Пользователи
+                </button>
+            </div>
+
+            <div class="content__tabs-item">
+                <div class="tab-block _active" id="future-circulation">
+                    <div class="table-container">
+                        <div class="">
+                            <button style="margin-right: 10px" class="table-bottom-button" type="button"
+                                    id="myBtn">Добавить тираж +
+                            </button>
+                            <button class="table-bottom-button" type="button" id="myBtnmatch">Добавить матч +
+                            </button>
+                        </div>
+                        {% for circulation in circulations %}
+                            <form action="">
+                                <header class="table-header" style="margin-top: 20px">
+                                    <div class="table-header__row">
+                                        <span>Номер тиража:</span>
+                                        <span id="future-circulation-data"
+                                              class="">{{ circulation.number }}</span>
+                                    </div>
+                                    <div class="table-header__row">
+                                        <span>Время окончания приема:</span>
+                                        <span id="future-circulation-data"
+                                              class="">{{ circulation.end_date|date:'d.m.y G:i' }}</span>
+                                    </div>
+                                    <div class="table-header__row">
+                                        <a style="color: #2099ff; cursor: pointer; margin-right: 10px;"
+                                           href="{% url 'circulation:сirculation_edit' circulation.pk %}">
+                                            редактировать
+                                        </a>
+                                        <a style="color: #ff4e20; cursor: pointer"
+                                           href="{% url 'circulation:сirculation_delete' circulation.pk %}">
+                                            удалить</a>
+                                    </div>
+                                </header>
+
+                                <table class="table">
+                                    <thead class="table-head">
+                                    <tr>
+                                        <th>Участник</th>
+                                        <th>Участник</th>
+                                        <th>Редактировать</th>
+                                        <th>Удалить</th>
+                                    </tr>
+                                    </thead>
+
+                                    <tbody class="tbody-future-circulation">
+                                    {% for future in futures %}
+                                        {% if future.circulation.id == circulation.id %}
+                                            <tr>
+                                                <td>
+                                                    <div style="display: flex; align-items: center">
+                                                        <img style="width: 20%" src="{{ future.command_a.imag.url }}"
+                                                             alt=""/>
+                                                        {{ future.command_a }}
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div style="display: flex; align-items: center">
+                                                        <img style="width: 20%" src="{{ future.command_b.imag.url }}"
+                                                             alt=""/>
+                                                        {{ future.command_b }}
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <a style="color: #2099ff; cursor: pointer"
+                                                       href="{% url 'circulation:match_edit' future.pk %}">
+                                                        редактировать
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a style="color: #ff4e20; cursor: pointer"
+                                                       href="{% url 'circulation:match_delete' future.pk %}">
+                                                        удалить
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        {% endif %}
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </form>
+                        {% endfor %}
+
+                        <div id="myModal" class="modal"
+                             style="display: none;position: fixed;z-index: 1; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.8);"
+                        >
+                            <div style="background-color: #fefefe; margin: 15% auto; padding: 10px; border: 1px solid #888; width: 20%">
+                                <span class="close"
+                                      style="color: #888; float: right; font-size: 28px; font-weight: bold; cursor: pointer">&times;</span>
+                                <form class="form-login" style="padding: 10px" method="post">
+                                    {% csrf_token %}
+                                    <div class="form-login__field">
+                                        <label>Укажите номер тиража</label>
+                                        {{ circulation_form.number }}
+                                    </div>
+                                    <div class="form-login__field">
+                                        <label>Укажите будешь тиража</label>
+                                        {{ circulation_form.end_date }}
+                                    </div>
+                                    <div class="form-login__field">
+                                        <label>Укажите текущий тиража</label>
+                                        {{ circulation_form.end_date_current }}
+                                    </div>
+                                    <div class="form-login__field">
+                                        <label>Укажите завершенный тираж</label>
+                                        {{ circulation_form.end_date_finish }}
+                                    </div>
+                                    <button class="form-login__submit-btn" type="submit">Создать</button>
+                                </form>
+                            </div>
+                        </div>
+                        <div id="myModalmatch" class="modal"
+                             style="display: none;position: fixed;z-index: 1; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.8);"
+                        >
+                            <div style="background-color: #fefefe; margin: 15% auto; padding: 10px; border: 1px solid #888; width: 20%">
+                                <span class="closematch"
+                                      style="color: #888; float: right; font-size: 28px; font-weight: bold; cursor: pointer">&times;</span>
+                                <form class="form-login" style="padding: 10px" method="post">
+                                    {% csrf_token %}
+                                    <div class="form-login__field">
+                                        <label>Укажите начало матча</label>
+                                        {{ match_form.start_data }}
+                                    </div>
+                                    <div class="form-login__field">
+                                        <label>Укажите первый команду</label>
+                                        {{ match_form.command_a }}
+                                    </div>
+                                    <div class="form-login__field">
+                                        <label>Укажите вторую команду</label>
+                                        {{ match_form.command_b }}
+                                    </div>
+                                    <div class="form-login__field">
+                                        <label>Укажите описание</label>
+                                        {{ match_form.tour }}
+                                    </div>
+                                    <div class="form-login__field">
+                                        <label>Укажите тираж</label>
+                                        {{ match_form.circulation }}
+                                    </div>
+                                    <button class="form-login__submit-btn" type="submit">Создать</button>
+                                </form>
+                            </div>
+                        </div>
+                        <script>
+                            var modal = document.getElementById('myModal');
+                            var btn = document.getElementById('myBtn');
+                            var sapn = document.getElementsByClassName("close")[0];
+
+                            btn.onclick = function () {
+                                modal.style.display = 'block';
+                            }
+                            sapn.onclick = function () {
+                                modal.style.display = 'none';
+                            }
+
+                            var modalmatch = document.getElementById('myModalmatch');
+                            var btnmatch = document.getElementById('myBtnmatch');
+                            var sapnmatch = document.getElementsByClassName("closematch")[0];
+
+                            btnmatch.onclick = function () {
+                                modalmatch.style.display = 'block';
+                            }
+                            sapnmatch.onclick = function () {
+                                modalmatch.style.display = 'none';
+                            }
+                        </script>
+
+                    </div>
+                </div>
+                <div class="tab-block" id="current-circulation">
+                    <div class="table-container">
+                        <header class="table-header">
+                            <div class="table-header__row">
+                                <span>Время окончания приема:</span>
+                                <span>23:59:59</span>
+                            </div>
+                        </header>
+
+                        <table class="table">
+                            <thead class="table-head">
+                            <tr>
+                                <th>Участник</th>
+                                <th>Участник</th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+                            {% for current in currents %}
+
+                                <tr>
+                                    <td style="font-weight: 600">
+                                        <div style="display: flex; align-items: center">
+                                            <img style="width: 20%" src="{{ current.command_a.imag.url }}" alt=""/>
+                                            {{ current.command_a }}
+                                        </div>
+                                    </td>
+                                    <td style="font-weight: 600">
+                                        <div style="display: flex; align-items: center">
+                                            <img style="width: 20%" src="{{ current.command_b.imag.url }}" alt=""/>
+                                            {{ current.command_b }}
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+
+                        <div class="table-footer">
+                            <div class="table-footer__row">
+                                <span> Количество проданных билетов: </span>
+                                <span> 1500</span>/<span>100</span>/<span>10</span>
+                            </div>
+
+                            <div class="table-footer__row">
+                                <span> Общая сумма ставок: </span> <span>75 000 р.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-block" id="completed-edition">
+
+                    <div class="table-container" style="margin-bottom: 20px">
+                        <header class="table-header">
+                            <div class="table-header__row">
+                                <span>Время окончания приема:</span>
+                                <span>23:59:59</span>
+                            </div>
+                            <div class="table-header__row">
+                                <span>Номер тиража:</span>
+                                <span>{{ finish.circulation.number }}</span>
+                            </div>
+
+                        </header>
+                        <form action="" id="form-completed-edition">
+                            <table class="table">
+                                <thead class="table-head">
+                                <tr>
+                                    <th>Участник</th>
+                                    <th>Участник</th>
+                                    <th>Результат</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for finish in finishes %}
+                                    <tr>
+                                        <td>
+                                            <div style="display: flex; align-items: center">
+                                                <img style="width: 20%" src="{{ finish.command_a.imag.url }}" alt=""/>
+                                                {{ finish.command_a }}
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div style="display: flex; align-items: center">
+                                                <img style="width: 20%" src="{{ finish.command_b.imag.url }}" alt=""/>
+                                                {{ finish.command_b }}
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <input
+                                                    type="text"
+                                                    style="color: #2099ff; cursor: pointer; text-align: center"
+                                                    value="1:0"
+                                                    disabled="true"
+                                            />
+                                        </td>
+                                        <td>
+                                            <button type="button" style="color: #2099ff">
+                                                редактировать
+                                            </button>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </form>
+
+
+                        <div class="table-footer">
+                            <div class="table-footer__row">
+                                <span> Количество проданных билетов: </span>
+                                <span> 1500</span>/<span>100</span>/<span>10</span>
+                            </div>
+
+                            <div class="table-footer__row">
+                                <span> Общая сумма ставок: </span> <span>75 000 р.</span>
+                            </div>
+
+                            <div class="table-footer__row">
+                                <span> Количество выигравших билетов: </span>
+                                <span>5</span>/<span>1</span>/<span>0</span>
+                            </div>
+
+                            <div class="table-footer__row">
+                                <span> Общая сумма выиграша: </span> <span>140 000 р.</span>
+                            </div>
+
+                            <div class="table-footer__row">
+                                <button class="table-footer__button">Опубликовать</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-block" id="tickets">
+                    <div class="table-container">
+                        <form action="" class="form-tickets">
+                            <table class="table">
+                                <thead class="table-head">
+                                <tr>
+                                    <th>Название</th>
+                                    <th>Стоимость</th>
+                                    <th>Выиграш</th>
+                                    <th><span style="opacity: 0">edit</span></th>
+                                    <th><span style="opacity: 0">delete</span></th>
+                                </tr>
+                                </thead>
+
+                                <tbody>
+                                {% for ticket in ticket %}
+                                    <tr>
+                                        <td style="font-weight: 600">
+                                            {{ ticket.name }}
+                                        </td>
+                                        <td style="font-weight: 600">
+                                            {{ ticket.price }}
+                                        </td>
+                                        <td style="font-weight: 600">
+                                            {{ ticket.win }}
+                                        </td>
+
+                                        <td style="display: grid; place-items: center">
+                                            <a href="{% url 'circulation:ticket_edit' ticket.pk %}" type="submit">
+                                                <svg
+                                                        width="19"
+                                                        height="19"
+                                                        viewBox="0 0 19 19"
+                                                        fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                >
+                                                    <path
+                                                            d="M11.06 6.52L11.98 7.44L2.92 16.5H2V15.58L11.06 6.52ZM14.66 0.5C14.41 0.5 14.15 0.6 13.96 0.79L12.13 2.62L15.88 6.37L17.71 4.54C18.1 4.15 18.1 3.52 17.71 3.13L15.37 0.79C15.17 0.59 14.92 0.5 14.66 0.5ZM11.06 3.69L0 14.75L0 18.5H3.75L14.81 7.44L11.06 3.69Z"
+                                                            fill="black"
+                                                    />
+                                                </svg>
+                                            </a>
+                                        </td>
+
+                                        <td>
+                                            <a href="{% url 'circulation:ticket_delete' ticket.pk %}">
+                                                <svg
+                                                        width="14"
+                                                        height="19"
+                                                        viewBox="0 0 14 19"
+                                                        fill="none"
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                >
+                                                    <path
+                                                            d="M11 6.5V16.5H3V6.5H11ZM9.5 0.5H4.5L3.5 1.5H0L0 3.5H14V1.5H10.5L9.5 0.5ZM13 4.5H1V16.5C1 17.6 1.9 18.5 3 18.5H11C12.1 18.5 13 17.6 13 16.5V4.5Z"
+                                                            fill="black"
+                                                    />
+                                                </svg>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </form>
+                        <button id="myBtnticket" class="table-bottom-button">Добавить билет +</button>
+                        <div id="myModalticket" class="modal"
+                             style="display: none;position: fixed;z-index: 1; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.8);"
+                        >
+                            <div style="background-color: #fefefe; margin: 15% auto; padding: 10px; border: 1px solid #888; width: 20%">
+                                <span class="closeticket"
+                                      style="color: #888; float: right; font-size: 28px; font-weight: bold; cursor: pointer">&times;</span>
+                                <form class="form-login" style="padding: 10px" method="post">
+                                    {% csrf_token %}
+                                    <div class="form-login__field">
+                                        <label>Название билета</label>
+                                        {{ ticket_form.name }}
+                                    </div>
+                                    <div class="form-login__field">
+                                        <label>Цена билета</label>
+                                        {{ ticket_form.price }}
+                                    </div>
+                                    <div class="form-login__field">
+                                        <label>Сумма выигрыша</label>
+                                        {{ ticket_form.win }}
+                                    </div>
+                                    <button class="form-login__submit-btn" type="submit">Создать</button>
+                                </form>
+                            </div>
+                        </div>
+                        <script>
+                            var modalticket = document.getElementById('myModalticket');
+                            var btnticket = document.getElementById('myBtnticket');
+                            var sapnticket = document.getElementsByClassName("closeticket")[0];
+
+                            btnticket.onclick = function () {
+                                modalticket.style.display = 'block';
+                            }
+                            sapnticket.onclick = function () {
+                                modalticket.style.display = 'none';
+                            }
+                        </script>
+                    </div>
+                </div>
+
+                <div class="tab-block" id="users">
+                    <div class="table-container">
+                        <div class="table-result">Всего: <span> {{ users_count }} </span> пользователей</div>
+
+                        <table class="table">
+                            <thead class="table-head">
+                            <tr>
+                                <th style="padding: 1vw !important">Фамилия Имя Отчество</th>
+                                <th style="padding: 1vw !important">Email</th>
+                                <th style="padding: 1vw !important">Номер телефона</th>
+                                <th style="padding: 1vw !important">Дата рождения</th>
+                                <th style="padding: 1vw !important">Регион</th>
+                                <th style="padding: 1vw !important">Баланс</th>
+                                <th style="padding: 1vw !important">Статус</th>
+                                <th style="padding: 1vw !important">
+                                    <div class="table-search">
+                                        <form>
+                                            <button type="submit" class="table-search__icon"
+                                            >
+                                                <svg
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                        fill="none"
+                                                        viewBox="0 0 24 24"
+                                                        stroke-width="2"
+                                                        stroke="currentColor"
+                                                        class="w-6 h-6"
+                                                >
+                                                    <path
+                                                            stroke-linecap="round"
+                                                            stroke-linejoin="round"
+                                                            d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+                                                    />
+                                                </svg>
+                                            </button>
+                                            <input
+                                                    name="search"
+                                                    type="search"
+                                                    placeholder="Поиск"
+                                                    class="table-search__input"
+                                            />
+                                        </form>
+                                    </div>
+                                </th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+                            {% for user in users %}
+                                <tr>
+                                    <td> {{ user.first_name }} {{ user.username }} {{ user.last_name }}</td>
+                                    <td>{{ user.email }}</td>
+                                    <td>{{ user.phone }}</td>
+                                    <td>{{ user.birthday|date:"d.m.y"}}</td>
+                                    <td>{{ user.region }}</td>
+                                    <td>{{ user.balance }}</td>
+                                    <td></td>
+                                    <td>
+                                        <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                fill="none"
+                                                viewBox="0 0 24 24"
+                                                stroke-width="1.5"
+                                                stroke="currentColor"
+                                                class="w-6 h-6"
+                                        >
+                                            <path
+                                                    stroke-linecap="round"
+                                                    stroke-linejoin="round"
+                                                    d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z"
+                                            />
+                                        </svg>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+
+                        <div class="table-pagination">
+                            <span> Страница: </span>
+                            <span class="table-pagination__left"
+                            ><svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke-width="2"
+                                    stroke="currentColor"
+                            >
+                    <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M15.75 19.5L8.25 12l7.5-7.5"
+                    />
+                  </svg>
+                </span>
+                            <span class="table-pagination__page">10</span>
+                            <span class="table-pagination__right">
+                  <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke-width="1.5"
+                          stroke="currentColor"
+                          class="w-6 h-6"
+                  >
+                    <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                    />
+                  </svg>
+                </span>
+                            <span>из</span>
+                            <span class="table-pagination__pages">1 204</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            let tabs = document.querySelectorAll(".content");
+
+            for (let index = 0; index < tabs.length; index++) {
+                let tab = tabs[index];
+                let tabs_items = tab.querySelectorAll(".content__tab-btn");
+                let tabs_blocks = tab.querySelectorAll(".tab-block");
+                for (let index = 0; index < tabs_items.length; index++) {
+                    let tabs_item = tabs_items[index];
+
+                    tabs_item.addEventListener("click", function (e) {
+                        for (let index = 0; index < tabs_items.length; index++) {
+                            let tabs_item = tabs_items[index];
+                            tabs_item.classList.remove("_active");
+                            tabs_blocks[index].classList.remove("_active");
+                        }
+                        tabs_item.classList.add("_active");
+                        tabs_blocks[index].classList.add("_active");
+                        e.preventDefault();
+                    });
+                }
+            }
+        });
+    </script>
+{% endblock %}

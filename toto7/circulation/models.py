@@ -28,7 +28,7 @@ class Circulation(models.Model):
     end_date_finish = models.DateTimeField(null=True, blank=True)
 
     def __str__(self):
-        return f'{self.end_date}'
+        return f'{self.number}'
 
 
 class Match(models.Model):
@@ -39,28 +39,25 @@ class Match(models.Model):
     result_b = models.IntegerField(null=True, blank=True)
     winner = models.ForeignKey(to=Command, on_delete=models.CASCADE, related_name="winner", null=True, blank=True)
     tour = models.CharField(max_length=255)
-    circulation = models.ForeignKey(to=Circulation, on_delete=models.CASCADE, related_name='circulation')
+    circulation = models.ForeignKey(to=Circulation, on_delete=models.CASCADE, related_name='circulations')
 
     def __str__(self):
         return f'{self.command_a} and {self.command_b}'
 
 
 class User(AbstractUser):
-    ADMIN = 'admin'
-    CLIENT = 'client'
     role = (
-        (ADMIN, 'Админ'),
-        (CLIENT, 'Клиент'),
+        ('ADMIN', 'Админ'),
+        ('CLIENT', 'Клиент'),
     )
 
     image = models.ImageField(null=True, blank=True)
-    login = models.CharField(max_length=255)
-    password = models.CharField(max_length=255)
-    role = models.CharField(choices=role, default=CLIENT, max_length=255)
-    # first_name = models.CharField(max_length=150)
-    # last_name = models.CharField(max_length=150)
-    # email = models.EmailField()
-    # phone = models.IntegerField()
-    # birthday = models.DateField()
-    # region = models.CharField(max_length=150)
-    # balance = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    role = models.CharField(choices=role, max_length=255, null=True, blank=True)
+    email = models.EmailField(null=True, blank=True)
+    phone = models.IntegerField(null=True, blank=True)
+    birthday = models.DateField(null=True, blank=True)
+    region = models.CharField(max_length=150, null=True, blank=True)
+    balance = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+
+    def __str__(self):
+        return self.last_name

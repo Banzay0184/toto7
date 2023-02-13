@@ -1,0 +1,47 @@
+{% extends 'basenone.html' %}
+{% load static %}
+{% block content %}
+    <div class="overlay">
+        <div class="pop-up">
+            <div class="pop-up__hero">
+                <h2 class="pop-up__title">TOTO<span>7 -</span> твоя счастливая ставка!</h2>
+            </div>
+            <form class="pop-up__form form-login" name="login"
+                  method="post">
+                {% csrf_token %}
+                <fieldset>
+                    <legend>
+                        Вход
+                        <a href="{% url 'circulation:sign_up' %}" style="color: #2099ff; " type="button" class="signup-btn">Регистрация</a>
+                    </legend>
+                    <div class="form-login__field">
+                        <label>Укажите Ваш Имя</label>
+                        {{ form.username }}
+                    </div>
+                    <div class="form-login__field">
+                        <label>Введите пароль</label>
+                        {{ form.password }}
+                    </div>
+                    {% if form.errors %}
+                        <p style="color: #ff4e20; margin-bottom: 10px">
+                            Неправильный пароль или Логен
+                        </p>
+                    {% endif %}
+                    <div class="form-login__field form-login__field_flex">
+                        <input type="checkbox" name="signupCheckbox"/><span
+                            class="checkmark"
+                    ></span>
+                        <label class="checkbox-label">Запомнить меня</label>
+                    </div>
+                    <button class="form-login__submit-btn" type="submit">Войти</button>
+                    <a style="margin-left: 10px" href="{% url 'circulation:index' %}" class="form-signup__submit-btn"
+                       type="submit">
+                        Назад
+                    </a>
+                    <button class="form-login__restore-btn" type="button">Забыли пароль?</button>
+
+                </fieldset>
+            </form>
+        </div>
+    </div>
+{% endblock %}

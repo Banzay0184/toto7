@@ -2492,11 +2492,6 @@ input[type="checkbox"]:focus ~ .checkmark {
     border: none;
 }
 
-.table-search__icon {
-    display: grid;
-    place-items: center;
-}
-
 .table-search__icon svg {
     color: #666;
     width: 1.465vw;

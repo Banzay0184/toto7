@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block script %}
+    <script defer src="js/main.min.js"></script>
+    <script src="js/profile-form.js"></script>
+{% endblock %}
+{% block content %}
+    <main>
+        <section class="content">
+            <div class="content__tabs">
+                <button class="content__tab-btn active" type="button" data-tab="profile">
+                    Мой профиль
+                </button>
+                <button class="content__tab-btn" type="button" data-tab="status">
+                    Мой статус
+                </button>
+                <button class="content__tab-btn" type="button" data-tab="rates">
+                    Мои ставки
+                </button>
+            </div>
+            <div class="content__data profile" id="profile">
+                <form id="profile-form" action="">
+                    <div class="profile__avatar">
+                        <button class="profile__avatar-edit" type="button"></button>
+                    </div>
+
+                    <ul class="profile__info">
+                        <li class="profile__field">
+                            <p class="profile__description">Фамилия Имя Отчество</p>
+                        </li>
+                        <li class="profile__field">
+                            <p class="profile__description">E-mail</p>
+                            {{ users_form.email }}
+                            <p>{{ user.email }}</p>
+                        </li>
+                        <li class="profile__field">
+                            <p class="profile__description">Номер телефона</p>
+                        </li>
+                        <li class="profile__field">
+                            <p class="profile__description">Дата рождения</p>
+                        </li>
+                        <li class="profile__field">
+                            <p class="profile__description">Регион</p>
+                        </li>
+                        <li class="profile__field">
+                            <p class="profile__description">Статус</p>
+                            <p class="profile__data profile__data_status">Бронзовый</p>
+                        </li>
+                    </ul>
+                </form>
+                <button type="button">изменить</button>
+            </div>
+            <div class="content__data status" id="status" hidden>
+                <div class="status__card active">
+                    <h3 class="status__head status__head_red">Бронзовый</h3>
+                    <div class="status__body status__body_red">
+                        <p class="status__amount">Приобретено: 100 билетов</p>
+                        <p class="status__rest">Осталось: 400 билетов до Золотого</p>
+                        <button class="status__btn btn" type="button">Как получить?</button>
+                    </div>
+                </div>
+                <div class="status__card">
+                    <h3 class="status__head status__head_gold">Золотой</h3>
+                    <div class="status__body status__body_gold">
+                        <p class="status__info">
+                            Скидка 5 %
+                            <span>на все билеты</span>
+                        </p>
+                    </div>
+                </div>
+                <div class="status__card">
+                    <h3 class="status__head status__head_blue">Бриллиантовый</h3>
+                    <div class="status__body status__body_blue">
+                        <p class="status__info">
+                            Скидка 10 %
+                            <span>на все билеты</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="content__data rates" id="rates" hidden>
+                <div class="rates__sorted">
+                    <button class="rates__btn active" type="button">Все</button>
+                    <button class="rates__btn" type="button">Ожидают</button>
+                    <button class="rates__btn" type="button">Выигравшие</button>
+                </div>
+                <table class="rates__table">
+                    <tr>
+                        <th>Дата</th>
+                        <th>Билет</th>
+                        <th>Выигрыш</th>
+                        <th>Статус</th>
+                    </tr>
+                    <tr>
+                        <td>2022-12-01</td>
+                        <td><span data-ticket-status="bronze"></span>№12345678</td>
+                        <td>15 000</td>
+                        <td>Получен</td>
+                    </tr>
+                    <tr>
+                        <td>2022-12-01</td>
+                        <td><span data-ticket-status="bronze"></span>№12345633</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>2022-12-06</td>
+                        <td><span data-ticket-status="gold"></span>№12345679</td>
+                        <td></td>
+                        <td>Ожидает</td>
+                    </tr>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <script>
+    </script>
+{% endblock %}

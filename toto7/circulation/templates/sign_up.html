@@ -1,0 +1,93 @@
+{% extends 'basenone.html' %}
+{% load static %}
+{% block content %}
+    <div class="overlay">
+        <div class="pop-up">
+            <div class="pop-up__hero">
+                <h2 class="pop-up__title">TOTO<span>7 -</span> твоя счастливая ставка!</h2>
+            </div>
+            <form method="post" class="pop-up__form form-signup" name="signup">
+                {% csrf_token %}
+                <fieldset>
+                    <legend>Регистрация</legend>
+                    <div class="form-signup__field form-signup__field_short">
+                        <label>Укажите Ваш E-mail</label>
+                        {{ form.email }}
+                        {% if form.email.errors %}
+                            <ul style="margin-bottom: 10px">
+                                {% for error in form.email.errors %}
+                                    <li><strong style="color: #ff4e20">{{ error|escape }}</strong></li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+
+                    </div>
+                    <div class="form-signup__field form-signup__field_long">
+                        <label>Укажите Ваши Фамилия</label>
+                        {{ form.first_name }}
+                    </div>
+                    <div class="form-signup__field form-signup__field_long">
+                        <label>Укажите Ваши Имя</label>
+                        {{ form.username }}
+                    </div>
+                    <div class="form-signup__field form-signup__field_long">
+                        <label>Укажите Ваши Отчество</label>
+                        {{ form.last_name }}
+                    </div>
+                    <div class="form-signup__field form-signup__field_short">
+                        <label>Придумайте пароль</label>
+                        {{ form.password1 }}
+                        {% if form.password1.errors %}
+                            <div style="color: #ff4e20">
+                                Неправильный пароль
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="form-signup__field form-signup__field_short">
+                        <label>Повторите пароль</label>
+                        {{ form.password2 }}
+                    </div>
+                    {% if form.password2.errors %}
+                        <ul style="margin-bottom: 10px">
+                            {% for error in form.password2.errors %}
+                                <li><strong style="color: #ff4e20">{{ error|escape }}</strong></li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                    <div class="form-signup__field form-signup__field_long birthdate">
+                        <label>Укажите дату рождения</label>
+                        <div class="birthdate__select-groupe">
+                            {{ form.birthday }}
+                        </div>
+                        <small></small>
+                    </div>
+                    <div class="form-signup__field form-signup__field_long region">
+                        <label>Выберите регион проживания</label>
+                        {{ form.region }}
+                    </div>
+                    <div class="form-signup__field form-signup__field_short">
+                        <label>Номер телефона</label>
+                        {{ form.phone }}
+                    </div>
+                    <div class="form-signup__field form-signup__field_flex">
+                        <input type="checkbox" name="signupCheckbox" required/><span
+                            class="checkmark"
+                    ></span>
+                        <label class="checkbox-label"
+                        >Я прочитал и понимаю
+                            <a href="#" title="Условия использования Сайта"
+                            >Условия использования Сайта</a
+                            >, а так же подтверждаю, что мне исполнилось 18 лет.</label
+                        >
+                    </div>
+                    <button class="form-signup__submit-btn" type="submit">
+                        Зарегистрироваться
+                    </button>
+                    <a style="margin-left: 10px" href="{% url 'circulation:sign_in' %}" class="form-signup__submit-btn" type="submit">
+                        Назад
+                    </a>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'basenone.html' %}
+{% load static %}
+{% block content %}
+    <div class="overlay">
+        <div class="pop-up">
+            <div class="pop-up__hero">
+                <h2 class="pop-up__title">TOTO<span>7 -</span> твоя счастливая ставка!</h2>
+            </div>
+            <form class="pop-up__form form-login" name="login"
+                  method="post">
+                {% csrf_token %}
+                <fieldset>
+                    <div class="form-login__field">
+                        <label>Номер тиража</label>
+                        {{ form.number }}
+                    </div>
+                    <div class="form-login__field">
+                        <label>Будущий тираж</label>
+                        {{ form.end_date }}
+                    </div>
+                    <div class="form-login__field">
+                        <label>Текущий тираж</label>
+                        {{ form.end_date_current }}
+                    </div>
+                    <div class="form-login__field">
+                        <label>Завершенный тираж</label>
+                        {{ form.end_date_finish }}
+                    </div>
+                    <button class="form-login__submit-btn" type="submit">Изменить</button>
+                    <a style="margin-left: 10px" href="{% url 'circulation:adminpanel' %}" class="form-signup__submit-btn"
+                       type="submit">
+                        Назад
+                    </a>
+
+                </fieldset>
+            </form>
+        </div>
+    </div>
+{% endblock %}
