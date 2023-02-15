@@ -6,6 +6,11 @@
     <script src="js/profile-form.js"></script>
 {% endblock %}
 {% block content %}
+    <style>
+        .hidden {
+            display: none;
+        }
+    </style>
     <main>
         <section class="content">
             <div class="content__tabs">
@@ -87,9 +92,16 @@
                             <p class="profile__data profile__data_status">Бронзовый</p>
                         </li>
                         <li>
-                            <button type="submit">изменить</button>
-                            <button id="button" type="button">редактировать</button>
+                            <button type="submit" id="update" class="hidden">изменить</button>
+                            <button id="edit" type="button" >редактировать</button>
                             <script>
+                                let inputs = document.querySelectorAll('.input')
+                                inputs.forEach(inp => inp.classList.add("hidden"))
+                                edit.addEventListener('click', () => {
+                                 inputs.forEach(inp => inp.classList.remove("hidden"))
+                                    edit.classList.add('hidden')
+                                    update.classList.remove('hidden')
+                                })
 
                             </script>
                         </li>
