@@ -50,8 +50,8 @@ def adminpanel(request):
     ticket = Ticket.objects.all()
     future = Match.objects.filter(circulation__end_date__gte=datetime.now())
     current = Match.objects.filter(circulation__end_date_current__gte=datetime.now())
-    finish = Match.objects.filter(circulation__end_date_current__lte=datetime.now())
-    circulation = Circulation.objects.filter(end_date__gte=datetime.now())
+    finish = Match.objects.filter(circulation__end_date_finish__gte=datetime.now())
+    circulation = Circulation.objects.filter(end_date_finish__gte=datetime.now())
     users = User.objects.all()
     users_count = User.objects.count()
 
@@ -102,12 +102,15 @@ def adminpanel(request):
 
 def userinfo(request):
     # start users_form
-    users_form = UserForm(request.POST or None, instance=User)
-    if request.method == 'POST' and users_form.is_valid():
-        users_form.save()
-        return redirect('circulation:userinfo')
-    users_form = UserForm()
+    if request.method == 'POST':
+        users_form = UserEditForm(request.POST, request.FILES, instance=request.user, )
+        print(users_form)
+        if users_form.is_valid():
+            users_form.save()
+    else:
+        users_form = UserEditForm(instance=request.user)
     # end users_form
+
     return render(request, 'userinfo.html', {'users_form': users_form})
 
 
@@ -133,6 +136,15 @@ def match_edit(request, pk):
         form.save()
         return redirect('circulation:adminpanel')
     return render(request, 'match_edit.html', {'form': form, 'match': match})
+
+
+def finish_match_edit(request, pk):
+    match = Match.objects.get(pk=pk)
+    form = MatchFormEdit(request.POST or None, instance=match)
+    if form.is_valid():
+        form.save()
+        return redirect('circulation:adminpanel')
+    return render(request, 'finish_match_edit.html', {'form': form, 'match': match})
 
 
 def match_delete(request, pk):

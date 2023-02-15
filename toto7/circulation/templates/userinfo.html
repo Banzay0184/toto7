@@ -20,36 +20,81 @@
                 </button>
             </div>
             <div class="content__data profile" id="profile">
-                <form id="profile-form" action="">
+                <form id="profile-form" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
                     <div class="profile__avatar">
-                        <button class="profile__avatar-edit" type="button"></button>
+                        <img src="{{ user.image.url }}">
                     </div>
 
                     <ul class="profile__info">
                         <li class="profile__field">
-                            <p class="profile__description">Фамилия Имя Отчество</p>
+                            <p class="profile__description">Фамилия</p>
+                            <div class="input" style="border: #2099ff solid 1px; border-radius: 5px;margin-right: 5px">
+                                {{ users_form.first_name }}
+                            </div>
+                            <p>{{ user.first_name }}</p>
+                        </li>
+                        <li class="profile__field">
+                            <p class="profile__description">Имя</p>
+                            <div class="input" style="border: #2099ff solid 1px; border-radius: 5px;margin-right: 5px;">
+                                {{ users_form.username }}
+                            </div>
+                            <p>{{ user.username }}</p>
+                        </li>
+                        <li class="profile__field">
+                            <p class="profile__description">Отчество</p>
+                            <div class="input" style="border: #2099ff solid 1px; border-radius: 5px;margin-right: 5px;">
+                                {{ users_form.last_name }}
+                            </div>
+                            <p>{{ user.last_name }}</p>
                         </li>
                         <li class="profile__field">
                             <p class="profile__description">E-mail</p>
-                            {{ users_form.email }}
+                            <div class="input" style="border: #2099ff solid 1px; border-radius: 5px;margin-right: 5px;">
+                                {{ users_form.email }}
+                            </div>
                             <p>{{ user.email }}</p>
                         </li>
                         <li class="profile__field">
                             <p class="profile__description">Номер телефона</p>
+                            <div class="input" style="border: #2099ff solid 1px; border-radius: 5px;margin-right: 5px;">
+                                {{ users_form.phone }}
+                            </div>
+                            <p>{{ user.phone }}</p>
                         </li>
                         <li class="profile__field">
                             <p class="profile__description">Дата рождения</p>
+                            <div class="input" style="margin-right: 5px;">
+                                {{ users_form.birthday }}
+                            </div>
+                            <p>{{ user.birthday }}</p>
                         </li>
                         <li class="profile__field">
                             <p class="profile__description">Регион</p>
+                            <div class="input" style="border: #2099ff solid 1px; border-radius: 5px;margin-right: 5px;">
+                                {{ users_form.region }}
+                            </div>
+                            <p>{{ user.region }}</p>
+                        </li>
+                        <li class="profile__field">
+                            <p class="profile__description">Фото</p>
+                            <div class="input" style="margin-right: 5px;">
+                                {{ users_form.image }}
+                            </div>
                         </li>
                         <li class="profile__field">
                             <p class="profile__description">Статус</p>
                             <p class="profile__data profile__data_status">Бронзовый</p>
                         </li>
+                        <li>
+                            <button type="submit">изменить</button>
+                            <button id="button" type="button">редактировать</button>
+                            <script>
+
+                            </script>
+                        </li>
                     </ul>
                 </form>
-                <button type="button">изменить</button>
             </div>
             <div class="content__data status" id="status" hidden>
                 <div class="status__card active">

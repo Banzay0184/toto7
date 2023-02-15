@@ -203,138 +203,157 @@
                 </div>
                 <div class="tab-block" id="current-circulation">
                     <div class="table-container">
-                        <header class="table-header">
-                            <div class="table-header__row">
-                                <span>Время окончания приема:</span>
-                                <span>23:59:59</span>
+                        {% for circulation in circulations %}
+                            <form action="">
+                                <header class="table-header" style="margin-top: 20px">
+                                    <div class="table-header__row">
+                                        <span>Номер тиража:</span>
+                                        <span id="future-circulation-data"
+                                              class="">{{ circulation.number }}</span>
+                                    </div>
+                                    <div class="table-header__row">
+                                        <span>Время окончания приема:</span>
+                                        <span id="future-circulation-data"
+                                              class="">{{ circulation.end_date_current|date:'d.m.y G:i' }}</span>
+                                    </div>
+                                    <div class="table-header__row">
+                                        <a style="color: #2099ff; cursor: pointer; margin-right: 10px;"
+                                           href="{% url 'circulation:сirculation_edit' circulation.pk %}">
+                                            редактировать
+                                        </a>
+                                        <a style="color: #ff4e20; cursor: pointer"
+                                           href="{% url 'circulation:сirculation_delete' circulation.pk %}">
+                                            удалить</a>
+                                    </div>
+                                </header>
+
+                                <table class="table">
+                                    <thead class="table-head">
+                                    <tr>
+                                        <th>Участник</th>
+                                        <th>Участник</th>
+                                    </tr>
+                                    </thead>
+
+                                    <tbody class="tbody-future-circulation">
+                                    {% for current in currents %}
+                                        {% if current.circulation_current.id == circulation_current.id %}
+                                            <tr>
+                                                <td>
+                                                    <div style="display: flex; align-items: center">
+                                                        <img style="width: 20%" src="{{ current.command_a.imag.url }}"
+                                                             alt=""/>
+                                                        {{ current.command_a }}
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div style="display: flex; align-items: center">
+                                                        <img style="width: 20%" src="{{ current.command_b.imag.url }}"
+                                                             alt=""/>
+                                                        {{ current.command_b }}
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        {% endif %}
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </form>
+
+                            <div class="table-footer">
+                                <div class="table-footer__row">
+                                    <span> Количество проданных билетов: </span>
+                                    <span> 1500</span>/<span>100</span>/<span>10</span>
+                                </div>
+
+                                <div class="table-footer__row">
+                                    <span> Общая сумма ставок: </span> <span>75 000 р.</span>
+                                </div>
                             </div>
-                        </header>
-
-                        <table class="table">
-                            <thead class="table-head">
-                            <tr>
-                                <th>Участник</th>
-                                <th>Участник</th>
-                            </tr>
-                            </thead>
-
-                            <tbody>
-                            {% for current in currents %}
-
-                                <tr>
-                                    <td style="font-weight: 600">
-                                        <div style="display: flex; align-items: center">
-                                            <img style="width: 20%" src="{{ current.command_a.imag.url }}" alt=""/>
-                                            {{ current.command_a }}
-                                        </div>
-                                    </td>
-                                    <td style="font-weight: 600">
-                                        <div style="display: flex; align-items: center">
-                                            <img style="width: 20%" src="{{ current.command_b.imag.url }}" alt=""/>
-                                            {{ current.command_b }}
-                                        </div>
-                                    </td>
-                                </tr>
-                            {% endfor %}
-                            </tbody>
-                        </table>
-
-                        <div class="table-footer">
-                            <div class="table-footer__row">
-                                <span> Количество проданных билетов: </span>
-                                <span> 1500</span>/<span>100</span>/<span>10</span>
-                            </div>
-
-                            <div class="table-footer__row">
-                                <span> Общая сумма ставок: </span> <span>75 000 р.</span>
-                            </div>
-                        </div>
+                        {% endfor %}
                     </div>
                 </div>
                 <div class="tab-block" id="completed-edition">
+                    <div class="table-container">
+                        {% for circulation in circulations %}
+                            <form action="">
+                                <header class="table-header" style="margin-top: 20px">
+                                    <div class="table-header__row">
+                                        <span>Номер тиража:</span>
+                                        <span id="future-circulation-data"
+                                              class="">{{ circulation.number }}</span>
+                                    </div>
+                                    <div class="table-header__row">
+                                        <span>Время окончания приема:</span>
+                                        <span id="future-circulation-data"
+                                              class="">{{ circulation.end_date_finish|date:'d.m.y G:i' }}</span>
+                                    </div>
+                                    <div class="table-header__row">
+                                        <a style="color: #2099ff; cursor: pointer; margin-right: 10px;"
+                                           href="{% url 'circulation:сirculation_edit' circulation.pk %}">
+                                            редактировать
+                                        </a>
+                                        <a style="color: #ff4e20; cursor: pointer"
+                                           href="{% url 'circulation:сirculation_delete' circulation.pk %}">
+                                            удалить</a>
+                                    </div>
+                                </header>
 
-                    <div class="table-container" style="margin-bottom: 20px">
-                        <header class="table-header">
-                            <div class="table-header__row">
-                                <span>Время окончания приема:</span>
-                                <span>23:59:59</span>
-                            </div>
-                            <div class="table-header__row">
-                                <span>Номер тиража:</span>
-                                <span>{{ finish.circulation.number }}</span>
-                            </div>
-
-                        </header>
-                        <form action="" id="form-completed-edition">
-                            <table class="table">
-                                <thead class="table-head">
-                                <tr>
-                                    <th>Участник</th>
-                                    <th>Участник</th>
-                                    <th>Результат</th>
-                                    <th></th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                {% for finish in finishes %}
+                                <table class="table">
+                                    <thead class="table-head">
                                     <tr>
-                                        <td>
-                                            <div style="display: flex; align-items: center">
-                                                <img style="width: 20%" src="{{ finish.command_a.imag.url }}" alt=""/>
-                                                {{ finish.command_a }}
-                                            </div>
-                                        </td>
-
-                                        <td>
-                                            <div style="display: flex; align-items: center">
-                                                <img style="width: 20%" src="{{ finish.command_b.imag.url }}" alt=""/>
-                                                {{ finish.command_b }}
-                                            </div>
-                                        </td>
-
-                                        <td>
-                                            <input
-                                                    type="text"
-                                                    style="color: #2099ff; cursor: pointer; text-align: center"
-                                                    value="1:0"
-                                                    disabled="true"
-                                            />
-                                        </td>
-                                        <td>
-                                            <button type="button" style="color: #2099ff">
-                                                редактировать
-                                            </button>
-                                        </td>
+                                        <th>Участник</th>
+                                        <th>Участник</th>
+                                        <th>Результат</th>
+                                        <th></th>
                                     </tr>
-                                {% endfor %}
-                                </tbody>
-                            </table>
-                        </form>
+                                    </thead>
 
+                                    <tbody class="tbody-future-circulation">
+                                    {% for finish in finishes %}
+                                        {% if finish.circulation.id == circulation.id %}
+                                            <tr>
+                                                <td>
+                                                    <div style="display: flex; align-items: center; {% if finish.result_a < finish.result_b %} color: #ff4e20 {% endif %}">
+                                                        <img style="width: 20%" src="{{ finish.command_a.imag.url }}"
+                                                             alt=""/>
+                                                        {{ finish.command_a }}
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div style="display: flex; align-items: center;{% if finish.result_a > finish.result_b %} color: #ff4e20 {% endif %}">
+                                                        <img style="width: 20%" src="{{ finish.command_b.imag.url }}"
+                                                             alt=""/>
+                                                        {{ finish.command_b }}
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <p>{{ finish.result_a }} : {{ finish.result_b }} </p>
+                                                </td>
+                                                <td>
+                                                    <a style="color: #2099ff; cursor: pointer"
+                                                       href="{% url 'circulation:finish_match_edit' finish.pk %}">
+                                                        редактировать
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        {% endif %}
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </form>
 
-                        <div class="table-footer">
-                            <div class="table-footer__row">
-                                <span> Количество проданных билетов: </span>
-                                <span> 1500</span>/<span>100</span>/<span>10</span>
+                            <div class="table-footer">
+                                <div class="table-footer__row">
+                                    <span> Количество проданных билетов: </span>
+                                    <span> 1500</span>/<span>100</span>/<span>10</span>
+                                </div>
+
+                                <div class="table-footer__row">
+                                    <span> Общая сумма ставок: </span> <span>75 000 р.</span>
+                                </div>
                             </div>
-
-                            <div class="table-footer__row">
-                                <span> Общая сумма ставок: </span> <span>75 000 р.</span>
-                            </div>
-
-                            <div class="table-footer__row">
-                                <span> Количество выигравших билетов: </span>
-                                <span>5</span>/<span>1</span>/<span>0</span>
-                            </div>
-
-                            <div class="table-footer__row">
-                                <span> Общая сумма выиграша: </span> <span>140 000 р.</span>
-                            </div>
-
-                            <div class="table-footer__row">
-                                <button class="table-footer__button">Опубликовать</button>
-                            </div>
-                        </div>
+                        {% endfor %}
                     </div>
                 </div>
                 <div class="tab-block" id="tickets">

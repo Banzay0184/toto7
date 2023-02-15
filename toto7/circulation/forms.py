@@ -1,4 +1,4 @@
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UserChangeForm
 from django import forms
 
 from .models import *
@@ -24,10 +24,31 @@ class UserForm(UserCreationForm):
         fields = 'email', 'first_name', 'username', 'last_name', 'password1', 'password2', 'birthday', 'region', 'phone'
 
 
+class UserEditForm(UserChangeForm):
+    email = forms.EmailField(widget=forms.EmailInput)
+    first_name = forms.CharField()
+    username = forms.CharField()
+    last_name = forms.CharField()
+    password1 = forms.CharField(widget=forms.PasswordInput, required=False)
+    password2 = forms.CharField(widget=forms.PasswordInput, required=False)
+    birthday = forms.DateField(required=False, widget=forms.DateInput(format='%d/%m/%Y', attrs={
+        'type': 'date', 'placeholder': 'Select Date',
+    }))
+    region = forms.CharField()
+    phone = forms.CharField(widget=forms.TextInput(attrs={
+        'type': 'tel'
+    }))
+    image = forms.ImageField(required=False, )
+
+    class Meta:
+        model = User
+        fields = 'email', 'first_name', 'username', 'last_name', 'password1', 'password2', 'birthday', 'region', 'phone', 'image'
+
+
 class CirculationForm(forms.ModelForm):
     number = forms.IntegerField()
-    end_date = forms.DateTimeField(required=False, widget=forms.DateTimeInput(attrs={
-        'type': 'datetime-local'
+    end_date = forms.DateTimeField(required=False, widget=forms.DateTimeInput(format='%d/%m/%Y', attrs={
+        'type': 'datetime-local', 'placeholder': 'Select Date',
     }))
     end_date_current = forms.DateTimeField(required=False, widget=forms.DateTimeInput(attrs={
         'type': 'datetime-local'
@@ -47,15 +68,24 @@ class MatchForm(forms.ModelForm):
     }))
     command_a = forms.SelectMultiple()
     command_b = forms.SelectMultiple()
-    # result_a = models.IntegerField(null=True, blank=True)
-    # result_b = models.IntegerField(null=True, blank=True)
-    # winner = models.ForeignKey(to=Command, on_delete=models.CASCADE, related_name="winner", null=True, blank=True)
+    result_a = forms.IntegerField(required=False)
+    result_b = forms.IntegerField(required=False)
+    winner = forms.SelectMultiple()
     tour = forms.CharField(widget=forms.TextInput)
     circulation = forms.SelectMultiple()
 
     class Meta:
         model = Match
-        fields = 'start_data', 'command_a', 'command_b', 'tour', 'circulation'
+        fields = 'start_data', 'command_a', 'command_b', 'tour', 'circulation', 'result_a', 'result_b', 'winner'
+
+
+class MatchFormEdit(forms.ModelForm):
+    result_a = forms.IntegerField(required=False)
+    result_b = forms.IntegerField(required=False)
+
+    class Meta:
+        model = Match
+        fields = 'result_a', 'result_b',
 
 
 class TicketForm(forms.ModelForm):

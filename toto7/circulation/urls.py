@@ -11,6 +11,7 @@ urlpatterns = [
     path('userinfo/', userinfo, name='userinfo'),
     path('adminpanel/', adminpanel, name='adminpanel'),
     path('match_edit/<str:pk>', match_edit, name='match_edit'),
+    path('finish_match_edit/<str:pk>', finish_match_edit, name='finish_match_edit'),
     path('match_delete/<str:pk>', match_delete, name='match_delete'),
     path('сirculation_edit/<str:pk>', сirculation_edit, name='сirculation_edit'),
     path('сirculation_delete/<str:pk>', сirculation_delete, name='сirculation_delete'),
