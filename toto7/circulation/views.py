@@ -10,7 +10,8 @@ from django.contrib.auth.decorators import login_required
 def index(request):
     match = Match.objects.filter(circulation__end_date_current__gte=datetime.now())
     ticket = Ticket.objects.all()
-    return render(request, 'index.html', {'match': match, 'ticket': ticket})
+    betform = MatchForm()
+    return render(request, 'index.html', {'match': match, 'ticket': ticket, 'betform': betform})
 
 
 def sign_up(request):
@@ -41,6 +42,18 @@ def sign_in(request):
 def sign_out(request):
     logout(request)
     return redirect('circulation:index')
+
+
+def about(request):
+    return render(request, 'about.html')
+
+
+def rules(request):
+    return render(request, 'rules.html')
+
+
+def privacy(request):
+    return render(request, 'privacy.html')
 
 
 @login_required(login_url='/login')
@@ -104,7 +117,6 @@ def userinfo(request):
     # start users_form
     if request.method == 'POST':
         users_form = UserEditForm(request.POST, request.FILES, instance=request.user, )
-        print(users_form)
         if users_form.is_valid():
             users_form.save()
     else:
@@ -129,6 +141,12 @@ def сirculation_delete(request, pk):
     return redirect('circulation:adminpanel')
 
 
+def circulation_archive(request):
+    archive = Match.objects.filter(circulation__end_date_finish__lte=datetime.now())
+    circulation = Circulation.objects.filter(end_date_finish__lte=datetime.now())
+    return render(request, 'circulation_archive.html', {'archive': archive, 'circulation': circulation})
+
+
 def match_edit(request, pk):
     match = Match.objects.get(pk=pk)
     form = MatchForm(request.POST or None, instance=match)
@@ -143,6 +161,19 @@ def finish_match_edit(request, pk):
     form = MatchFormEdit(request.POST or None, instance=match)
     if form.is_valid():
         form.save()
+        if match.result_a < match.result_b:
+            match.winner = match.command_b
+            match.draw = False
+            match.save()
+        if match.result_a > match.result_b:
+            match.winner = match.command_a
+            match.draw = False
+            match.save()
+        if match.result_a == match.result_b:
+            match.winner = None
+            match.draw = True
+            match.save()
+
         return redirect('circulation:adminpanel')
     return render(request, 'finish_match_edit.html', {'form': form, 'match': match})
 
@@ -166,3 +197,29 @@ def ticket_delete(request, pk):
     t_delete = Ticket.objects.get(pk=pk)
     t_delete.delete()
     return redirect('circulation:adminpanel')
+
+
+def commands(request):
+    commands = Command.objects.all()
+    form = CommandsForm(request.POST, request.FILES or None)
+    if request.method == 'POST' and form.is_valid():
+        print('40' * 30)
+        form.save()
+        return redirect('circulation:commands')
+    form = CommandsForm()
+    return render(request, 'commands.html', {'commands': commands, 'form': form})
+
+
+def commands_edit(request, pk):
+    commands = Command.objects.get(pk=pk)
+    form = CommandsForm(request.POST or None, instance=commands)
+    if form.is_valid():
+        form.save()
+        return redirect('circulation:commands')
+    return render(request, 'command_edit.html', {'form': form, 'commands': commands})
+
+
+def commands_delete(request, pk):
+    c_delete = Command.objects.get(pk=pk)
+    c_delete.delete()
+    return redirect('circulation:commands')

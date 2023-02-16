@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+    {% block script %}
+        <script src="{% static 'js/users.js' %}"></script>
+    {% endblock %}
+    <main>
+        <section class="content">
+            <div class="content__tabs">
+                <h1>
+                    Архив тиражей
+                </h1>
+            </div>
+            <div class="content__tabs-item">
+                <div class="" id="completed-edition">
+                    <div class="table-container">
+                        {% for circulation in circulation %}
+                            <form action="">
+                                <header class="table-header" style="margin-top: 20px">
+                                    <div class="table-header__row">
+                                        <span>Номер тиража:</span>
+                                        <span id="future-circulation-data"
+                                              class="">{{ circulation.number }}</span>
+                                    </div>
+                                    <div class="table-header__row">
+                                        <span>Время окончания приема:</span>
+                                        <span id="future-circulation-data"
+                                              class="">{{ circulation.end_date_finish|date:'d.m.y G:i' }}</span>
+                                    </div>
+                                    <div class="table-header__row">
+                                        <a style="color: #ff4e20; cursor: pointer"
+                                           href="{% url 'circulation:сirculation_delete' circulation.pk %}">
+                                            удалить</a>
+                                    </div>
+                                </header>
+
+                                <table class="table">
+                                    <thead class="table-head">
+                                    <tr>
+                                        <th>Участник</th>
+                                        <th>Участник</th>
+                                        <th>Результат</th>
+                                        <th></th>
+                                    </tr>
+                                    </thead>
+
+                                    <tbody class="tbody-future-circulation">
+                                    {% for archive in archive %}
+                                        {% if archive.circulation.id == circulation.id %}
+                                            <tr>
+                                                <td>
+                                                    <div style="display: flex; align-items: center; {% if finish.result_a < finish.result_b %} color: #ff4e20 {% endif %}">
+                                                        <img style="width: 20%" src="{{ archive.command_a.imag.url }}"
+                                                             alt=""/>
+                                                        {{ archive.command_a }}
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div style="display: flex; align-items: center;{% if finish.result_a > finish.result_b %} color: #ff4e20 {% endif %}">
+                                                        <img style="width: 20%" src="{{ archive.command_b.imag.url }}"
+                                                             alt=""/>
+                                                        {{ archive.command_b }}
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <p>{{ archive.result_a }} : {{ archive.result_b }} </p>
+                                                </td>
+                                            </tr>
+                                        {% endif %}
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </form>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+{% endblock %}

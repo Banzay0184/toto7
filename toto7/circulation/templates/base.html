@@ -63,10 +63,13 @@
 <footer class="footer">
     <a class="footer__logo" href="/"><img src="/static/assets/images/logo.svg" alt="Logo"/></a>
     <ul class="footer__links-list">
-        <li><a class="footer__link" href="#">О нас</a></li>
-        <li><a class="footer__link" href="#">Архив тиражей</a></li>
-        <li><a class="footer__link" href="#">Правила</a></li>
-        <li><a class="footer__link" href="#">Политика конфиденциальности</a></li>
+        <li><a class="footer__link" href="{% url 'circulation:about' %}">О нас</a></li>
+        <li><a class="footer__link" href="{% url 'circulation:rules' %}">Правила</a></li>
+        <li><a class="footer__link" href="{% url 'circulation:privacy' %}">Политика конфиденциальности</a></li>
+        {% if user.role == 'ADMIN' %}
+            <li><a class="footer__link" href="{% url 'circulation:circulation_archive' %}">Архив тиражей</a></li>
+            <li><a class="footer__link" href="{% url 'circulation:commands' %}">Список команд</a></li>
+        {% endif %}
     </ul>
 </footer>
 </body>

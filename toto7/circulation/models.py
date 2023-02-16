@@ -15,7 +15,7 @@ class Ticket(models.Model):
 
 class Command(models.Model):
     name = models.CharField(max_length=100)
-    imag = models.ImageField()
+    imag = models.FileField()
 
     def __str__(self):
         return self.name
@@ -38,6 +38,7 @@ class Match(models.Model):
     result_a = models.IntegerField(null=True, blank=True)
     result_b = models.IntegerField(null=True, blank=True)
     winner = models.ForeignKey(to=Command, on_delete=models.CASCADE, related_name="winner", null=True, blank=True)
+    draw = models.BooleanField(null=True, blank=True, default=False)
     tour = models.CharField(max_length=255)
     circulation = models.ForeignKey(to=Circulation, on_delete=models.CASCADE, related_name='circulations')
 
@@ -58,6 +59,17 @@ class User(AbstractUser):
     birthday = models.DateField(null=True, blank=True)
     region = models.CharField(max_length=150, null=True, blank=True)
     balance = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    circulation = models.ForeignKey(to=Circulation, on_delete=models.CASCADE, related_name='users')
+    ticket = models.ForeignKey(to=Ticket, on_delete=models.CASCADE, related_name='users')
 
     def __str__(self):
         return self.username
+
+
+class Bet(models.Model):
+    match = models.ForeignKey(to=Match, on_delete=models.CASCADE)
+    winner = models.ForeignKey(to=Command, on_delete=models.CASCADE, null=True, blank=True)
+    user_id = models.ForeignKey(to=User, on_delete=models.CASCADE, null=True, blank=True)
+
+    def __str__(self):
+        return self.match

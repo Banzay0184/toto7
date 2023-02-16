@@ -237,7 +237,7 @@
 
                                     <tbody class="tbody-future-circulation">
                                     {% for current in currents %}
-                                        {% if current.circulation_current.id == circulation_current.id %}
+                                        {% if current.circulation.id == circulation.id %}
                                             <tr>
                                                 <td>
                                                     <div style="display: flex; align-items: center">
@@ -445,19 +445,19 @@
                                     <button class="form-login__submit-btn" type="submit">Создать</button>
                                 </form>
                             </div>
-                        </div>
-                        <script>
-                            var modalticket = document.getElementById('myModalticket');
-                            var btnticket = document.getElementById('myBtnticket');
-                            var sapnticket = document.getElementsByClassName("closeticket")[0];
+                            <script>
+                                var modalticket = document.getElementById('myModalticket');
+                                var btnticket = document.getElementById('myBtnticket');
+                                var sapnticket = document.getElementsByClassName("closeticket")[0];
 
-                            btnticket.onclick = function () {
-                                modalticket.style.display = 'block';
-                            }
-                            sapnticket.onclick = function () {
-                                modalticket.style.display = 'none';
-                            }
-                        </script>
+                                btnticket.onclick = function () {
+                                    modalticket.style.display = 'block';
+                                }
+                                sapnticket.onclick = function () {
+                                    modalticket.style.display = 'none';
+                                }
+                            </script>
+                        </div>
                     </div>
                 </div>
 
@@ -516,7 +516,7 @@
                                     <td>{{ user.birthday|date:"d.m.y"}}</td>
                                     <td>{{ user.region }}</td>
                                     <td>{{ user.balance }}</td>
-                                    <td></td>
+                                    <td style="{% if user.ticket.price == 100 %} color: red;{% elif user.ticket.price == 500 %}color:gold;{% elif user.ticket.price == 1000 %}color:blue;{% endif %}">{{ user.ticket }}</td>
                                     <td>
                                         <svg
                                                 xmlns="http://www.w3.org/2000/svg"
