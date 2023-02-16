@@ -23,9 +23,12 @@
     <nav class="header__navigation navigation">
     </nav>
     {% if user.is_authenticated %}
-        <div class="header__user user">
+        <div class="header__user user" style="display: flex;
+    align-items: center;">
             <a href="{% url 'circulation:userinfo' %}" class="user__info">
-                <div class="user__avatar">{{ user.username.0.upper }}.{{ user.first_name.0.upper }}</div>
+                <div class="user__avatar">{% if user.image %}<img src="{{ user.image.url }}" alt="">
+                    {% else %}{{ user.username.0.upper }}.
+                    {{ user.first_name.0.upper }}{% endif %}</div>
                 <div class="user__name">{{ user.username.title }} {{ user.first_name.title }}</div>
             </a>
             {% if user.role == 'ADMIN' %}

@@ -1,3 +1,5 @@
+from pprint import pprint
+
 from django.shortcuts import render, redirect
 from datetime import datetime
 from .models import *
@@ -11,7 +13,8 @@ def index(request):
     match = Match.objects.filter(circulation__end_date_current__gte=datetime.now())
     ticket = Ticket.objects.all()
     betform = MatchForm()
-    return render(request, 'index.html', {'match': match, 'ticket': ticket, 'betform': betform})
+    user_bet = User.objects.all()
+    return render(request, 'index.html', {'match': match, 'ticket': ticket, 'betform': betform, 'user_bet': user_bet}, )
 
 
 def sign_up(request):
@@ -57,6 +60,8 @@ def privacy(request):
 
 
 @login_required(login_url='/login')
+
+
 def adminpanel(request):
     if request.user.role != 'ADMIN':
         return redirect('circulation:index')

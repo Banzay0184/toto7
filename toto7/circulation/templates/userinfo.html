@@ -28,7 +28,7 @@
                 <form id="profile-form" method="post" enctype="multipart/form-data">
                     {% csrf_token %}
                     <div class="profile__avatar">
-                        <img src="{{ user.image.url }}">
+                        <img src="{% if user.image %}{{ user.image.url }}{% else %}{% static 'assets/images/add-image.svg' %} {% endif %}">
                     </div>
 
                     <ul class="profile__info">
@@ -93,12 +93,12 @@
                         </li>
                         <li>
                             <button type="submit" id="update" class="hidden">изменить</button>
-                            <button id="edit" type="button" >редактировать</button>
+                            <button id="edit" type="button">редактировать</button>
                             <script>
                                 let inputs = document.querySelectorAll('.input')
                                 inputs.forEach(inp => inp.classList.add("hidden"))
                                 edit.addEventListener('click', () => {
-                                 inputs.forEach(inp => inp.classList.remove("hidden"))
+                                    inputs.forEach(inp => inp.classList.remove("hidden"))
                                     edit.classList.add('hidden')
                                     update.classList.remove('hidden')
                                 })
