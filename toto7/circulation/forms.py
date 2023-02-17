@@ -98,12 +98,15 @@ class TicketForm(forms.ModelForm):
         fields = 'name', 'price', 'win',
 
 
-class BetForm(forms.ModelForm):
-    winner = forms.RadioSelect()
+class BetInfoForm(forms.ModelForm):
+    username = forms.CharField(widget=forms.TextInput)
+    lastname = forms.CharField(widget=forms.TextInput)
+    imag = forms.FileField(widget=forms.FileInput, required=False, )
+    price = forms.DecimalField(widget=forms.NumberInput)
 
     class Meta:
-        model = Bet
-        fields = 'winner',
+        model = BetInfo
+        fields = 'username', 'lastname', 'imag', 'price'
 
 
 class CommandsForm(forms.ModelForm):

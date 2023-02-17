@@ -8,23 +8,23 @@
         <div class="" style="">
             <h1 style="margin-top: 20px;" class="section-title">Победители</h1>
             <div style="display: flex;align-items: center;justify-content: space-between;">
-                {% for user_bet in user_bet %}
+                {% for betinfo in betinfo %}
                     <div class="" style="display: flex">
-                        <div style="width: 10vw; height: 10vw; border: #2099ff solid 5px" class="user__avatar">
-                            {% if user_bet.image %}<img src="{{ user_bet.image.url }}" alt="">
+                        <div style="width: 5vw; height: 5vw; border: #2099ff solid 5px" class="user__avatar">
+                            {% if betinfo.image %}<img src="{{ user_bet.image.url }}" alt="">
                             {% else %}
-                                <div style="color:#2099ff; font-size: 35px">
-                                    {{ user_bet.username.0.upper }}.
-                                    {{ user_bet.first_name.0.upper }}
+                                <div style="color:#2099ff; font-size: 20px">
+                                    {{ betinfo.username.0.upper }}.
+                                    {{ betinfo.lastname.0.upper }}
                                 </div>
                             {% endif %}</div>
                         <div style="display: flex;flex-direction: column;align-items: flex-start;justify-content: space-around;"
                              class="">
                             <div class="user__name"
-                                 style="color: #000000; font-size: 30px">{{ user_bet.username.title }} {{ user_bet.first_name.title.0 }}.
+                                 style="color: #000000; font-size: 30px">{{ betinfo.username.title }} {{ betinfo.lastname.title.0 }}.
                             </div>
                             <div class="user__name"
-                                 style="color: #2099ff; font-size: 25px">+{{ user_bet.balance }} р.
+                                 style="color: #2099ff; font-size: 25px">+ {{ betinfo.price }} р.
                             </div>
                         </div>
                     </div>

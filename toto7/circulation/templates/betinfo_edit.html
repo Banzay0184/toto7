@@ -1,0 +1,39 @@
+{% extends 'basenone.html' %}
+{% load static %}
+{% block content %}
+    <div class="overlay">
+        <div class="pop-up">
+            <div class="pop-up__hero">
+                <h2 class="pop-up__title">TOTO<span>7 -</span> твоя счастливая ставка!</h2>
+            </div>
+            <form class="pop-up__form form-login" name="login"
+                  method="post">
+                {% csrf_token %}
+                <fieldset>
+                    <div class="form-login__field">
+                        <label>Имя победителя</label>
+                        {{ form.username}}
+                    </div>
+                    <div class="form-login__field">
+                        <label>Фамилия победителя</label>
+                        {{ form.lastname}}
+                    </div>
+                    <div class="form-login__field">
+                        <label>Изображение</label>
+                        {{ form.imag}}
+                    </div>
+                    <div class="form-login__field">
+                        <label>Выигрыш</label>
+                        {{ form.price}}
+                    </div>
+                </fieldset>
+                <button class="form-login__submit-btn" type="submit">Изменить</button>
+                <a style="margin-left: 10px" href="{% url 'circulation:betinfo' %}"
+                   class="form-signup__submit-btn"
+                   type="submit">
+                    Назад
+                </a>
+            </form>
+        </div>
+    </div>
+{% endblock %}

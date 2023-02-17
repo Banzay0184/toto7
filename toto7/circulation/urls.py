@@ -24,4 +24,7 @@ urlpatterns = [
     path('commands/', commands, name='commands'),
     path('commands_edit/<str:pk>', commands_edit, name='commands_edit'),
     path('commands_delete/<str:pk>', commands_delete, name='commands_delete'),
+    path('betinfo/', betinfo, name='betinfo'),
+    path('betinfo_edit/<str:pk>', betinfo_edit, name='betinfo_edit'),
+    path('betinfo_delete/<str:pk>', betinfo_delete, name='betinfo_delete'),
 ]

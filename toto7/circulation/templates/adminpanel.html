@@ -463,8 +463,12 @@
 
                 <div class="tab-block" id="users">
                     <div class="table-container">
-                        <div class="table-result">Всего: <span> {{ users_count }} </span> пользователей</div>
-
+                        <div class="table-result">
+                            Всего: <span> {{ users_count }} </span> пользователей
+                            <a style="margin-left: 20px" href="{% url 'circulation:betinfo' %}" class="table-bottom-button">
+                                Добавить Победители +
+                            </a>
+                        </div>
                         <table class="table">
                             <thead class="table-head">
                             <tr>
@@ -555,7 +559,7 @@
                     />
                   </svg>
                 </span>
-                            <span class="table-pagination__page">10</span>
+                            <span class="table-pagination__page">1</span>
                             <span class="table-pagination__right">
                   <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -573,7 +577,7 @@
                   </svg>
                 </span>
                             <span>из</span>
-                            <span class="table-pagination__pages">1 204</span>
+                            <span class="table-pagination__pages">1</span>
                         </div>
                     </div>
                 </div>

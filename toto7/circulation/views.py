@@ -12,9 +12,10 @@ from django.contrib.auth.decorators import login_required
 def index(request):
     match = Match.objects.filter(circulation__end_date_current__gte=datetime.now())
     ticket = Ticket.objects.all()
-    betform = MatchForm()
     user_bet = User.objects.all()
-    return render(request, 'index.html', {'match': match, 'ticket': ticket, 'betform': betform, 'user_bet': user_bet}, )
+    betinfo = BetInfo.objects.all()
+    return render(request, 'index.html',
+                  {'match': match, 'ticket': ticket, 'user_bet': user_bet, 'betinfo': betinfo}, )
 
 
 def sign_up(request):
@@ -60,8 +61,6 @@ def privacy(request):
 
 
 @login_required(login_url='/login')
-
-
 def adminpanel(request):
     if request.user.role != 'ADMIN':
         return redirect('circulation:index')
@@ -228,3 +227,28 @@ def commands_delete(request, pk):
     c_delete = Command.objects.get(pk=pk)
     c_delete.delete()
     return redirect('circulation:commands')
+
+
+def betinfo(request):
+    betinfo = BetInfo.objects.all()
+    form = BetInfoForm(request.POST, request.FILES or None)
+    if request.method == 'POST' and form.is_valid():
+        form.save()
+        return redirect('circulation:betinfo')
+    form = BetInfoForm()
+    return render(request, 'betinfo.html', {'betinfo': betinfo, 'form': form})
+
+
+def betinfo_edit(request, pk):
+    betinfo = BetInfo.objects.get(pk=pk)
+    form = BetInfoForm(request.POST or None, instance=betinfo)
+    if form.is_valid():
+        form.save()
+        return redirect('circulation:betinfo')
+    return render(request, 'betinfo_edit.html', {'form': form, 'betinfo': betinfo})
+
+
+def betinfo_delete(request, pk):
+    c_delete = BetInfo.objects.get(pk=pk)
+    c_delete.delete()
+    return redirect('circulation:betinfo')

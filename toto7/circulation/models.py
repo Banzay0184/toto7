@@ -66,10 +66,11 @@ class User(AbstractUser):
         return self.username
 
 
-class Bet(models.Model):
-    match = models.ForeignKey(to=Match, on_delete=models.CASCADE)
-    winner = models.ForeignKey(to=Command, on_delete=models.CASCADE, null=True, blank=True)
-    user_id = models.ForeignKey(to=User, on_delete=models.CASCADE, null=True, blank=True)
+class BetInfo(models.Model):
+    username = models.CharField(max_length=100)
+    lastname = models.CharField(max_length=100)
+    imag = models.FileField(null=True, blank=True)
+    price = models.DecimalField(max_digits=10, decimal_places=2, default=0)
 
     def __str__(self):
-        return self.match
+        return self.username
