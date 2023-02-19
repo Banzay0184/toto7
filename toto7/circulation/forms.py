@@ -47,23 +47,24 @@ class UserEditForm(UserChangeForm):
 
 class CirculationForm(forms.ModelForm):
     number = forms.IntegerField()
-    end_date = forms.DateTimeField(required=False, widget=forms.DateTimeInput(format='%d/%m/%Y', attrs={
-        'type': 'datetime-local', 'placeholder': 'Select Date',
+    end_date = forms.DateTimeField(required=False, widget=forms.DateTimeInput(format='%Y-%m-%d %H:%M', attrs={
+        'type': 'datetime-local',
+        'placeholder': 'Select Date',
     }))
-    end_date_current = forms.DateTimeField(required=False, widget=forms.DateTimeInput(attrs={
+    end_date_current = forms.DateTimeField(required=False, widget=forms.DateTimeInput(format='%Y-%m-%d %H:%M',attrs={
         'type': 'datetime-local'
     }))
-    end_date_finish = forms.DateTimeField(required=False, widget=forms.DateTimeInput(attrs={
+    end_date_finish = forms.DateTimeField(required=False, widget=forms.DateTimeInput(format='%Y-%m-%d %H:%M',attrs={
         'type': 'datetime-local'
     }))
 
     class Meta:
         model = Circulation
-        fields = 'number', 'end_date', 'end_date_current', 'end_date_finish'
+        fields = ('number', 'end_date', 'end_date_current', 'end_date_finish')
 
 
 class MatchForm(forms.ModelForm):
-    start_data = forms.DateTimeField(widget=forms.DateTimeInput(attrs={
+    start_data = forms.DateTimeField(widget=forms.DateTimeInput(format='%Y-%m-%d %H:%M',attrs={
         'type': 'datetime-local'
     }))
     command_a = forms.SelectMultiple()
