@@ -13,7 +13,7 @@ def index(request):
     match = Match.objects.filter(circulation__end_date_current__gte=datetime.now())
     ticket = Ticket.objects.all()
     user_bet = User.objects.all()
-    betinfo = BetInfo.objects.all()
+    betinfo = BetInfo.objects.all().order_by('-id')[:4]
     return render(request, 'index.html',
                   {'match': match, 'ticket': ticket, 'user_bet': user_bet, 'betinfo': betinfo}, )
 

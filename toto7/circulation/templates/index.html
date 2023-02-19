@@ -11,13 +11,15 @@
                 {% for betinfo in betinfo %}
                     <div class="" style="display: flex">
                         <div style="width: 5vw; height: 5vw; border: #2099ff solid 5px" class="user__avatar">
-                            {% if betinfo.image %}<img src="{{ user_bet.image.url }}" alt="">
+                            {% if betinfo.imag %}
+                                <img src="{{ betinfo.imag.url }}" alt="">
                             {% else %}
                                 <div style="color:#2099ff; font-size: 20px">
                                     {{ betinfo.username.0.upper }}.
                                     {{ betinfo.lastname.0.upper }}
                                 </div>
-                            {% endif %}</div>
+                            {% endif %}
+                        </div>
                         <div style="display: flex;flex-direction: column;align-items: flex-start;justify-content: space-around;"
                              class="">
                             <div class="user__name"
@@ -38,7 +40,6 @@
                     <div class="events__card card-event">
                         <div class="card-event__head">
                             <h3 class="card-event__title">
-                                <img src="{% static 'assets/images/title-icon.svg' %}" alt="Иконка события"/>Футбол:
                                 {{ match.tour }}
                             </h3>
                             <time class="card-event__time">{{ match.start_data }}</time>
@@ -55,19 +56,16 @@
                                     <label>
                                         <span>Победа</span>
                                     </label>
-                                    <input style="" type="radio" name="{{ match.id }}">
                                 </button>
                                 <button class="card-event__btn btn" type="button">
                                     <label>
                                         <span>Ничья</span>
                                     </label>
-                                    <input style="" type="radio" name="{{ match.id }}">
                                 </button>
                                 <button class="card-event__btn btn" type="button">
                                     <label>
                                         <span>Победа</span>
                                     </label>
-                                    <input style="" type="radio" name="{{ match.id }}">
                                 </button>
                             </div>
                             <div
