@@ -28,7 +28,8 @@
                 <form id="profile-form" method="post" enctype="multipart/form-data">
                     {% csrf_token %}
                     <div class="profile__avatar">
-                        <img src="{% if user.image %}{{ user.image.url }}{% else %}{% static 'assets/images/add-image.svg' %} {% endif %}">
+                        <img src="
+                                {% if user.image %}{{ user.image.url }}{% else %}{% static 'assets/images/add-image.svg' %} {% endif %}">
                     </div>
 
                     <ul class="profile__info">
@@ -90,6 +91,9 @@
                         <li class="profile__field">
                             <p class="profile__description">Статус</p>
                             <p class="profile__data profile__data_status">Бронзовый</p>
+                        </li>
+                        <li class="profile__field">
+                            <a href="{% url 'circulation:password_change' %}">Изменить пароль</a>
                         </li>
                         <li>
                             <button type="submit" id="update" class="hidden">изменить</button>

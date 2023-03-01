@@ -1,4 +1,5 @@
-from django.urls import path
+from django.urls import path, include
+from django.contrib.auth import views as auth_views
 from .views import *
 
 app_name = 'circulation'
@@ -27,4 +28,16 @@ urlpatterns = [
     path('betinfo/', betinfo, name='betinfo'),
     path('betinfo_edit/<str:pk>', betinfo_edit, name='betinfo_edit'),
     path('betinfo_delete/<str:pk>', betinfo_delete, name='betinfo_delete'),
+
+    path("password_reset/", auth_views.PasswordResetView.as_view(template_name='password_reset.html'),
+         name="password_reset"),
+    path("accounts/password_reset/done/",
+         auth_views.PasswordResetDoneView.as_view(template_name='password_reset_done.html'),
+         name="password_reset_done"),
+    path("password_change/", auth_views.PasswordChangeView.as_view(template_name='password_change.html'),
+         name="password_change"),
+    path("accounts/password_change/done/", auth_views.PasswordChangeDoneView.as_view(template_name='password_change_done.html'),
+         name="password_change_done"),
+    path("reset/<uidb64>/<token>/", auth_views.PasswordResetConfirmView.as_view(), name="password_reset_confirm"),
+    path("reset/done/", auth_views.PasswordResetCompleteView.as_view(), name="password_reset_complete"),
 ]

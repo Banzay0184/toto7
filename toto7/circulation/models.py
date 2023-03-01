@@ -54,7 +54,6 @@ class User(AbstractUser):
 
     image = models.ImageField(null=True, blank=True)
     role = models.CharField(choices=role, max_length=255, null=True, blank=True)
-    email = models.EmailField(null=True, blank=True)
     phone = models.IntegerField(null=True, blank=True)
     birthday = models.DateField(null=True, blank=True)
     region = models.CharField(max_length=150, null=True, blank=True)
