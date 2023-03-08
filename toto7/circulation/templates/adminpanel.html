@@ -83,14 +83,14 @@
                                             <tr>
                                                 <td>
                                                     <div style="display: flex; align-items: center">
-                                                        <img style="width: 50px" src="{{ future.command_a.imag.url }}"
+                                                        <img class="commands_img" src="{{ future.command_a.imag.url }}"
                                                              alt=""/>
                                                         {{ future.command_a }}
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <div style="display: flex; align-items: center">
-                                                        <img style="width: 50px" src="{{ future.command_b.imag.url }}"
+                                                        <img class="commands_img" src="{{ future.command_b.imag.url }}"
                                                              alt=""/>
                                                         {{ future.command_b }}
                                                     </div>
@@ -116,12 +116,12 @@
                         {% endfor %}
 
                         <div id="myModal" class="modal"
-                             style="display: none;position: fixed;z-index: 1; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.8);"
-                        >
-                            <div style="background-color: #fefefe; margin: 15% auto; padding: 10px; border: 1px solid #888; width: 20%">
+                             style="display: none;position: fixed;z-index: 1; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.8);">
+                            <div class="modale"
+                                 style="background-color: #fefefe; margin: 15% auto; padding: 10px; border: 1px solid #888;">
                                 <span class="close"
                                       style="color: #888; float: right; font-size: 28px; font-weight: bold; cursor: pointer">&times;</span>
-                                <form class="form-login" style="padding: 10px" method="post">
+                                <form class="form-login form-modale" style="padding: 10px" method="post">
                                     {% csrf_token %}
                                     <div class="form-login__field">
                                         <label>Укажите номер тиража</label>
@@ -146,10 +146,11 @@
                         <div id="myModalmatch" class="modal"
                              style="display: none;position: fixed;z-index: 1; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.8);"
                         >
-                            <div style="background-color: #fefefe; margin: 15% auto; padding: 10px; border: 1px solid #888; width: 20%">
+                            <div class="modale"
+                                 style="background-color: #fefefe; margin: 15% auto; padding: 10px; border: 1px solid #888;">
                                 <span class="closematch"
                                       style="color: #888; float: right; font-size: 28px; font-weight: bold; cursor: pointer">&times;</span>
-                                <form class="form-login" style="padding: 10px" method="post">
+                                <form class="form-login form-modale" style="padding: 10px" method="post">
                                     {% csrf_token %}
                                     <div class="form-login__field">
                                         <label>Укажите начало матча</label>
@@ -241,14 +242,14 @@
                                             <tr>
                                                 <td>
                                                     <div style="display: flex; align-items: center">
-                                                        <img style="width: 50px" src="{{ current.command_a.imag.url }}"
+                                                        <img class="commands_img" src="{{ current.command_a.imag.url }}"
                                                              alt=""/>
                                                         {{ current.command_a }}
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <div style="display: flex; align-items: center">
-                                                        <img style="width: 50px" src="{{ current.command_b.imag.url }}"
+                                                        <img class="commands_img" src="{{ current.command_b.imag.url }}"
                                                              alt=""/>
                                                         {{ current.command_b }}
                                                     </div>
@@ -314,15 +315,17 @@
                                         {% if finish.circulation.id == circulation.id %}
                                             <tr>
                                                 <td>
-                                                    <div style="display: flex; align-items: center; {% if finish.result_a < finish.result_b %} color: #ff4e20 {% endif %}">
-                                                        <img style="width: 50px" src="{{ finish.command_a.imag.url }}"
+                                                    <div class="commands"
+                                                         style="display: flex; align-items: center;gap: 5px {% if finish.result_a < finish.result_b %} color: #ff4e20 {% endif %}">
+                                                        <img class="commands_img" src="{{ finish.command_a.imag.url }}"
                                                              alt=""/>
                                                         {{ finish.command_a }}
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <div style="display: flex; align-items: center;{% if finish.result_a > finish.result_b %} color: #ff4e20 {% endif %}">
-                                                        <img style="width: 50px" src="{{ finish.command_b.imag.url }}"
+                                                    <div class="commands"
+                                                         style="display: flex; align-items: center;{% if finish.result_a > finish.result_b %} color: #ff4e20 {% endif %}">
+                                                        <img class="commands_img" src="{{ finish.command_b.imag.url }}"
                                                              alt=""/>
                                                         {{ finish.command_b }}
                                                     </div>
@@ -425,10 +428,11 @@
                         <div id="myModalticket" class="modal"
                              style="display: none;position: fixed;z-index: 1; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.8);"
                         >
-                            <div style="background-color: #fefefe; margin: 15% auto; padding: 10px; border: 1px solid #888; width: 20%">
+                            <div class="modale"
+                                 style="background-color: #fefefe; margin: 15% auto; padding: 10px; border: 1px solid #888;">
                                 <span class="closeticket"
                                       style="color: #888; float: right; font-size: 28px; font-weight: bold; cursor: pointer">&times;</span>
-                                <form class="form-login" style="padding: 10px" method="post">
+                                <form class="form-login form-modale" style="padding: 10px" method="post">
                                     {% csrf_token %}
                                     <div class="form-login__field">
                                         <label>Название билета</label>
@@ -465,7 +469,8 @@
                     <div class="table-container">
                         <div class="table-result">
                             Всего: <span> {{ users_count }} </span> пользователей
-                            <a style="margin-left: 20px" href="{% url 'circulation:betinfo' %}" class="table-bottom-button">
+                            <a style="margin-left: 20px" href="{% url 'circulation:betinfo' %}"
+                               class="table-bottom-button">
                                 Добавить Победители +
                             </a>
                         </div>

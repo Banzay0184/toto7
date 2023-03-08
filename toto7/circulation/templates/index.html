@@ -7,14 +7,14 @@
         </section>
         <div class="" style="">
             <h1 style="margin-top: 20px;" class="section-title">Победители</h1>
-            <div style="display: flex;align-items: center;justify-content: space-between;">
+            <div style="display: flex;align-items: center;justify-content: space-around;;flex-wrap: wrap">
                 {% for betinfo in betinfo %}
                     <div class="" style="display: flex">
-                        <div style="width: 5vw; height: 5vw; border: #2099ff solid 5px" class="user__avatar">
+                        <div class="user__avatar">
                             {% if betinfo.imag %}
                                 <img src="{{ betinfo.imag.url }}" alt="">
                             {% else %}
-                                <div style="color:#2099ff; font-size: 20px">
+                                <div class="user-text">
                                     {{ betinfo.username.0.upper }}.
                                     {{ betinfo.lastname.0.upper }}
                                 </div>
@@ -22,11 +22,9 @@
                         </div>
                         <div style="display: flex;flex-direction: column;align-items: flex-start;justify-content: space-around;"
                              class="">
-                            <div class="user__name"
-                                 style="color: #000000; font-size: 30px">{{ betinfo.username.title }} {{ betinfo.lastname.title.0 }}.
+                            <div class="user__name">{{ betinfo.username.title }} {{ betinfo.lastname.title.0 }}.
                             </div>
-                            <div class="user__name"
-                                 style="color: #2099ff; font-size: 25px">+ {{ betinfo.price }} р.
+                            <div class="user__price">+ {{ betinfo.price }} р.
                             </div>
                         </div>
                     </div>

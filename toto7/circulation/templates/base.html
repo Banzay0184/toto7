@@ -29,7 +29,7 @@
                 <div class="user__avatar">{% if user.image %}<img src="{{ user.image.url }}" alt="">
                     {% else %}{{ user.username.0.upper }}.
                     {{ user.first_name.0.upper }}{% endif %}</div>
-                <div class="user__name">{{ user.username.title }} {{ user.first_name.title }}</div>
+                <div style="color: white">{{ user.username.title }} {{ user.first_name.title }}</div>
             </a>
             {% if user.role == 'ADMIN' %}
                 <a href="{% url 'circulation:adminpanel' %}" class="user__privilege">Администратор</a>
@@ -56,8 +56,6 @@
             </a>
         </div>
     {% endif %}
-
-    <div class="header__burger"><span></span><span></span><span></span></div>
 </header>
 
 {% block content %}
